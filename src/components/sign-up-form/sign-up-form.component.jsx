@@ -1,35 +1,65 @@
 import { useState } from "react";
+import {
+   createAuthUserWithEmailAndPassword,
+   createUserDocumentFromAuth
+} from "../../lib/utils/firebase.utils";
 
 const formDefaultValues = {
-   userName: '',
-   userEmail: '',
-   userPassword: '',
+   displayName: '',
+   email: '',
+   password: '',
    confirmPassword: ''
 }
 
 const SignUpForm = () => {
    const [formValues, setFormValues] = useState(formDefaultValues)
-   const {userName, userEmail, userPassword, confirmPassword} = formValues
+   const { displayName, email, password, confirmPassword } = formValues
 
    console.log(formValues)
 
    const handleChange = (event) => {
       const { name, value } = event.target
-      setFormValues({...formValues, [name]: value})
+      setFormValues({ ...formValues, [name]: value })
+   }
+
+   const handleSubmit = async (event) => {
+      event.preventDefault()
+
+      if (password !== confirmPassword) {
+         alert("Passwords don't match")
+         return
+      }
+
+      try {
+         const { user } = await createAuthUserWithEmailAndPassword(email, password)
+         createUserDocumentFromAuth(user, { displayName })
+         clearForm()
+      } catch (error) {
+         if (error.code === 'auth/email-already-in-use') {
+            alert("Cannot create user, email already in use")
+         }
+         alert("User creation encountered an error", error)
+      }
+   }
+
+   const clearForm = () => {
+      setFormValues(formDefaultValues)
    }
 
    return (
       <>
          <div>Sign Up</div>
-         <form>
+         <form
+            onSubmit={handleSubmit}
+         >
             <label>
                User Name
                <input
                   type='text'
                   required
-                  name='userName'
+                  name='displayName'
                   onChange={handleChange}
-                  value={userName}
+                  value={displayName}
                ></input>
             </label>
             <label>
@@ -37,9 +67,9 @@ const SignUpForm = () => {
                <input
                   type='email'
                   required
-                  name='userEmail'
+                  name='email'
                   onChange={handleChange}
-                  value={userEmail}
+                  value={email}
                ></input>
             </label>
             <label>
@@ -47,9 +77,9 @@ const SignUpForm = () => {
                <input
                   type='password'
                   required
-                  name='userPassword'
+                  name='password'
                   onChange={handleChange}
-                  value={userPassword}
+                  value={password}
                ></input>
             </label>
             <label>
