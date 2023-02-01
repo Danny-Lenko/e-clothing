@@ -3,6 +3,8 @@ import {
    createAuthUserWithEmailAndPassword,
    createUserDocumentFromAuth
 } from "../../lib/utils/firebase.utils";
+import FormInput from "../form-input/form-input.component";
+import './sign-up-form.styles.scss'
 
 const formDefaultValues = {
    displayName: '',
@@ -14,8 +16,6 @@ const formDefaultValues = {
 const SignUpForm = () => {
    const [formValues, setFormValues] = useState(formDefaultValues)
    const { displayName, email, password, confirmPassword } = formValues
-
-   console.log(formValues)
 
    const handleChange = (event) => {
       const { name, value } = event.target
@@ -47,54 +47,50 @@ const SignUpForm = () => {
    }
 
    return (
-      <>
-         <div>Sign Up</div>
+      <div className="sign-up-container">
+         <h2>Sign Up</h2>
          <form
             onSubmit={handleSubmit}
          >
-            <label>
-               User Name
-               <input
-                  type='text'
-                  required
-                  name='displayName'
-                  onChange={handleChange}
-                  value={displayName}
-               ></input>
-            </label>
-            <label>
-               User Email
-               <input
-                  type='email'
-                  required
-                  name='email'
-                  onChange={handleChange}
-                  value={email}
-               ></input>
-            </label>
-            <label>
-               User Password
-               <input
-                  type='password'
-                  required
-                  name='password'
-                  onChange={handleChange}
-                  value={password}
-               ></input>
-            </label>
-            <label>
-               Confirm Password
-               <input
-                  type='password'
-                  required
-                  name='confirmPassword'
-                  onChange={handleChange}
-                  value={confirmPassword}
-               ></input>
-            </label>
+            <FormInput
+               label='User Name'
+               type='text'
+               required
+               name='displayName'
+               onChange={handleChange}
+               value={displayName}
+            />
+
+            <FormInput
+               label='User Email'
+               type='email'
+               required
+               name='email'
+               onChange={handleChange}
+               value={email}
+            />
+
+            <FormInput
+               label='Password'
+               type='password'
+               required
+               name='password'
+               onChange={handleChange}
+               value={password}
+            />
+
+            <FormInput
+               label='Confirm Password'
+               type='password'
+               required
+               name='confirmPassword'
+               onChange={handleChange}
+               value={confirmPassword}
+            />
+
             <button type="submit">Sing Up</button>
          </form>
-      </>
+      </div>
    );
 }
 
