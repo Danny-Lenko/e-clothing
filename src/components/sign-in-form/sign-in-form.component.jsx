@@ -80,6 +80,7 @@ const SignInForm = () => {
                   Sign In
                </Button>
                <Button
+                  type='button'
                   buttonType='google'
                   onClick={logGoogleUser}
                >
