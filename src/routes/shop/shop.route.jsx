@@ -9,17 +9,14 @@ const Shop = () => {
    if (!products) return <h2>Loading...</h2>
 
    return (
-      <>
-         <h2>Hello Shop</h2>
-         <div className="products-container">
-            {
-               products.map(product => <ProductCard
-                  key={product.id}
-                  product={product}
-               />)
-            }
-         </div>
-      </>
+      <div className="products-container">
+         {
+            products.map(product => <ProductCard
+               key={product.id}
+               product={product}
+            />)
+         }
+      </div>
    );
 }
 
