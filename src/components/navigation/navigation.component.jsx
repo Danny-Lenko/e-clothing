@@ -15,8 +15,8 @@ const Navigation = () => {
                <CrownLogo />
             </Link>
             <div className="nav-links-container">
-               <Link to='/store' className="nav-link">
-                  STORE
+               <Link to='/shop' className="nav-link">
+                  SHOP
                </Link>
                {
                   user ? (
