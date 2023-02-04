@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { DropdownContext } from '../../lib/contexts/dropdown.context';
+import { CartContext } from '../../lib/contexts/cart.context';
 import { ReactComponent as Image } from '../../assets/shopping-bag.svg';
 import './cart-icon.styles.scss'
 
 const CartIcon = () => {
-   const { setIsOpen } = useContext(DropdownContext)
+   const { setIsOpen } = useContext(CartContext)
 
    const handleClick = () => {
       setIsOpen(prev => !prev)
