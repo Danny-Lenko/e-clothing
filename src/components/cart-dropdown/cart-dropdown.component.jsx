@@ -1,11 +1,18 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../button/button.component'
 import CartItem from '../cart-item/cart-item.component'
 import { CartContext } from '../../lib/contexts/cart.context'
 import './cart-dropdown.styles.scss'
 
 const CartDropdown = () => {
-   const { cartItems } = useContext(CartContext)
+   const { cartItems, setIsOpen } = useContext(CartContext)
+   const navigate = useNavigate()
+
+   const handleClick = () => {
+      navigate('/checkout')
+      setIsOpen(false)
+   }
 
    return (
       <div className='cart-dropdown-container'>
@@ -14,7 +21,11 @@ const CartDropdown = () => {
                cartItems.map(item => <CartItem key={item.id} item={item} />)
             }
          </div>
-         <Button>Go to checkout</Button>
+         <Button
+            onClick={handleClick}
+         >
+            Go to checkout
+         </Button>
       </div>
    );
 }
