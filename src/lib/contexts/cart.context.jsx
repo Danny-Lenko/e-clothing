@@ -39,7 +39,7 @@ const removeItem = (cartItems, id) => {
 
       return { ...item, ordered: item.ordered - 1 }
    })
-      .filter(item => item.ordered > 0 )   
+      .filter(item => item.ordered > 0)
 }
 
 export const CartContextProvider = ({ children }) => {
@@ -68,9 +68,12 @@ export const CartContextProvider = ({ children }) => {
       setCartCount(
          cartItems.reduce((acc, cartItem) => acc + cartItem.ordered, 0)
       )
+   }, [cartItems])
+
+   useEffect(() => {
       setTotal(
          cartItems.reduce((total, cartItem) => {
-            return total + cartItem.ordered * cartItem.price 
+            return total + cartItem.ordered * cartItem.price
          }, 0)
       )
    }, [cartItems])

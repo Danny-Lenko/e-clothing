@@ -23,19 +23,27 @@ const CheckoutCard = ({ item }) => {
          <div className="image-container">
             <img src={imageUrl} alt={name} />
          </div>
+         
          <span className="name">{name}</span>
-         {/* <button
-            onClick={handleDecrease}
-         >
-            less
-         </button> */}
-         <span className="quantity">{ordered}</span>
-         {/* <button
-            onClick={handleIncrease}
-         >
-            more
-         </button> */}
+
+         <span className="quantity">
+            <div
+               className="arrow"
+               onClick={handleDecrease}
+            >
+               &#10094;
+            </div>
+            <span className="value">{ordered}</span>
+            <div
+               className="arrow"
+               onClick={handleIncrease}
+            >
+               &#10095;
+            </div>
+         </span>
+
          <span className="price">{price}</span>
+
          <span
             className="remove-button"
             onClick={handleRemove}
