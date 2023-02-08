@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../../lib/contexts/cart.context";
+import './checkout-card.styles.scss'
 
 const CheckoutCard = ({ item }) => {
    const { removeTitle, increaseOrder, decreaseOrder } = useContext(CartContext)
@@ -18,26 +19,29 @@ const CheckoutCard = ({ item }) => {
    }
 
    return (
-      <div>
-         <img src={imageUrl} alt={name} />
-         <span>{name}</span>
-         <button
+      <div className="checkout-card-container">
+         <div className="image-container">
+            <img src={imageUrl} alt={name} />
+         </div>
+         <span className="name">{name}</span>
+         {/* <button
             onClick={handleDecrease}
          >
             less
-         </button>
-         <span>{ordered}</span>
-         <button
+         </button> */}
+         <span className="quantity">{ordered}</span>
+         {/* <button
             onClick={handleIncrease}
          >
             more
-         </button>
-         <span>{price}</span>
-         <button
+         </button> */}
+         <span className="price">{price}</span>
+         <span
+            className="remove-button"
             onClick={handleRemove}
          >
-            remove
-         </button>
+            &#10005;
+         </span>
       </div>
    );
 }

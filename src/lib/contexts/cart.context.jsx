@@ -2,10 +2,14 @@ import { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext({
    isOpen: null,
+   cartItems: null,
+   cartCount: null,
+   total: null,
    setIsOpen: () => null,
-   cartItems: [],
    addCartItem: () => null,
-   cartCount: 0
+   removeTitle: () => null,
+   increaseOrder: () => null,
+   decreaseOrder: () => null
 })
 
 const addProduct = (cartItems, product) => {
