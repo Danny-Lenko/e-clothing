@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import { UserContext } from "../../lib/contexts/user.context";
 import { CartContext } from "../../lib/contexts/cart.context";
 import { signOutUser } from "../../lib/utils/firebase.utils";
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg'
-import './navigation.styles.scss'
+import { NavContainer, NavLinksContainer, NavLink, LogoContainer } from "./navigation.styles";
 
 const Navigation = () => {
    const { user } = useContext(UserContext)
@@ -14,34 +14,34 @@ const Navigation = () => {
 
    return (
       <>
-         <div className="navigation">
-            <Link to='/' className="logo-container">
+         <NavContainer>
+            <LogoContainer to='/'>
                <CrownLogo />
-            </Link>
-            <div className="nav-links-container">
-               <Link to='/shop' className="nav-link">
+            </LogoContainer>
+            <NavLinksContainer>
+               <NavLink to='/shop'>
                   SHOP
-               </Link>
+               </NavLink>
                {
                   user ? (
-                     <div
+                     <NavLink as='span'
                         className="nav-link"
                         onClick={signOutUser}
                      >
                         SIGN OUT
-                     </div>
+                     </NavLink>
                   ) : (
-                     <Link to='/auth' className="nav-link">
+                     <NavLink to='/auth'>
                         SIGN IN
-                     </Link>
+                     </NavLink>
                   )
                }
                <CartIcon />
-            </div>
+            </NavLinksContainer>
             {
                isOpen && <CartDropdown />
             }
-         </div>
+         </NavContainer>
          <Outlet />
       </>
    );
