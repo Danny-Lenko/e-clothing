@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../product-card/product-card.component";
-import './category-preview.styles.scss'
+import { Title, Container } from "./category-preview.styles";
 
 const CategoryPreview = ({ title, products }) => {
    const navigate = useNavigate()
@@ -12,14 +12,13 @@ const CategoryPreview = ({ title, products }) => {
    return (
       <>
          <h2>
-            <span
-               className="title"
+            <Title
                onClick={handleClick}
             >
                {title.toUpperCase()}
-            </span>
+            </Title>
          </h2>
-         <div className="products-container" key={title}>
+         <Container>
             {
                products
                   .slice(0, 4)
@@ -28,7 +27,7 @@ const CategoryPreview = ({ title, products }) => {
                      product={product}
                   />)
             }
-         </div>
+         </Container>
       </>
    );
 }

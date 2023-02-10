@@ -1,20 +1,19 @@
 import { categories } from "../../lib/categories-data";
-import Category from "../category/category.component";
-import './directory.styles.scss'
+import DirectoryCard from "../directory-card/directory-card.component";
+import { Container } from "./directory.styles";
 
 const Directory = () => {
-
    return (
-      <div className="directory-container">
+      <Container>
          {
             categories.map(({ id, title, imageUrl }) =>
-               <Category
+               <DirectoryCard
                   key={id}
                   title={title}
                   img={imageUrl}
                />)
          }
-      </div>
+      </Container>
    );
 }
 
