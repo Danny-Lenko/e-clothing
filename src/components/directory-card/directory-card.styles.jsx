@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+export const BackgroundImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-image: ${({ img }) => `url(${img})`}
+`
+
 export const Container = styled.div`
   min-width: 30%;
   height: 240px;
@@ -14,7 +22,7 @@ export const Container = styled.div`
   &:hover {
     cursor: pointer;
 
-    .background-image {
+    ${BackgroundImg} {
       transform: scale(1.1);
       transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
     }
@@ -23,13 +31,6 @@ export const Container = styled.div`
       opacity: 0.9;
     }
   }
-`
-
-export const BackgroundImg = styled.div`
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
 `
 
 export const Content = styled.div`
@@ -49,6 +50,7 @@ export const Content = styled.div`
     margin: 0 6px 0;
     font-size: 22px;
     color: #4a4a4a;
+    text-transform: uppercase;
   }
 
   p {
@@ -56,4 +58,3 @@ export const Content = styled.div`
     font-size: 16px;
   }
 `
- 

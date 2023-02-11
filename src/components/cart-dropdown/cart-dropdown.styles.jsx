@@ -24,4 +24,9 @@ export const CartItems = styled.div`
   flex-direction: column;
   overflow-y: scroll;
 `
+
+export const EmptyMessage = styled.span`
+  margin: 50px auto;
+  font-size: 18px;
+`
  

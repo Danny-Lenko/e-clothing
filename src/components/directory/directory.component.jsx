@@ -6,11 +6,12 @@ const Directory = () => {
    return (
       <Container>
          {
-            categories.map(({ id, title, imageUrl }) =>
+            categories.map(({ id, title, imageUrl, path }) =>
                <DirectoryCard
                   key={id}
                   title={title}
                   img={imageUrl}
+                  path={path}
                />)
          }
       </Container>

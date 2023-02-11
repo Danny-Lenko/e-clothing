@@ -1,7 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const mainColor = 'black'
 const subColor = 'grey'
+
+const shrinkCssStyles = css`
+  top: -14px;
+  font-size: 12px;
+  color: ${mainColor};
+`
 
 export const Container = styled.div`
   position: relative;
@@ -10,6 +16,18 @@ export const Container = styled.div`
   input[type='password'] {
     letter-spacing: 0.3em;
   }
+`
+
+export const Label = styled.label`
+  color: ${subColor};
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 300ms ease all;
+  ${({shrink}) => shrink && shrinkCssStyles}
 `
 
 export const Input = styled.input`
@@ -29,26 +47,9 @@ export const Input = styled.input`
     outline: none;
   }
 
-  &:focus ~ .label {
-    top: -14px;
-    font-size: 12px;
-    color: ${mainColor};
+  &:focus ~ ${Label} {
+    ${shrinkCssStyles}
   }
 `
 
-export const Label = styled.label`
-  color: ${subColor};
-  font-size: 16px;
-  font-weight: normal;
-  position: absolute;
-  pointer-events: none;
-  left: 5px;
-  top: 10px;
-  transition: 300ms ease all;
 
-  &.shrink {
-    top: -14px;
-    font-size: 12px;
-    color: ${mainColor};
-  }
-`

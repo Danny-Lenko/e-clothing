@@ -1,18 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { 
    Container,
    BackgroundImg,
    Content
 } from "./directory-card.styles";
 
-const DirectoryCard = ({ title, img }) => {
+const DirectoryCard = ({ title, img, path }) => {
+   const navigate = useNavigate()
+
+   const handleClick = () => {
+      navigate(path)
+   }
+
    return (
-      <Container>
-         <BackgroundImg
-            className='background-image'
-            style={{
-               backgroundImage: `url(${img})`
-            }}
-         ></BackgroundImg>
+      <Container onClick={handleClick}>
+         <BackgroundImg img={img} />
          <Content className='content'>
             <h2>{title}</h2>
             <p>Shop Now</p>
