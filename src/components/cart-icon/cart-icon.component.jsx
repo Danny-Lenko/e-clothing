@@ -3,10 +3,10 @@ import { CartContext } from '../../lib/contexts/cart.context';
 import { Container, Image, ItemCount } from './cart-icon.styles';
 
 const CartIcon = () => {
-   const { setIsOpen, cartCount } = useContext(CartContext)
+   const { isOpen, setIsOpen, cartCount } = useContext(CartContext)
 
    const handleClick = () => {
-      setIsOpen(prev => !prev)
+      setIsOpen(!isOpen)
    }
 
    return (

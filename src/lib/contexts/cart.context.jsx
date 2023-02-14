@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 export const CartContext = createContext({
    isOpen: null,
@@ -6,11 +6,42 @@ export const CartContext = createContext({
    cartCount: null,
    total: null,
    setIsOpen: () => null,
-   addCartItem: () => null,
-   removeTitle: () => null,
-   increaseOrder: () => null,
-   decreaseOrder: () => null
+   setCartItems: () => null,
+   setCartCount: () => null,
+   setTotal: () => null,
 })
+
+const initialState = {
+   isOpen: null,
+   cartItems: [],
+   cartCount: null,
+   total: null
+}
+
+export const actionTypes = {
+   setIsOpen: 'setIsOpen',
+   setCartItems: 'setCartItems',
+   setCartCount: 'setCartCount',
+   setTotal: 'setTotal'
+}
+
+const cartReducer = (state, action) => {
+   const { type, payload } = action
+
+   switch (type) {
+      case actionTypes.setIsOpen:
+         return { ...state, isOpen: payload }
+      case actionTypes.setCartItems:
+         return { ...state, cartItems: payload }
+      case actionTypes.setCartCount:
+         return { ...state, cartCount: payload }
+      case actionTypes.setTotal:
+         return { ...state, total: payload }
+
+      default:
+         throw new Error()
+   }
+}
 
 const addProduct = (cartItems, product) => {
    const chosenProduct = cartItems.find(item => item.id === product.id)
@@ -43,39 +74,62 @@ const removeItem = (cartItems, id) => {
 }
 
 export const CartContextProvider = ({ children }) => {
-   const [isOpen, setIsOpen] = useState(false)
-   const [cartItems, setCartItems] = useState([])
-   const [cartCount, setCartCount] = useState(0)
-   const [total, setTotal] = useState(0)
+   const [{
+      isOpen,
+      cartItems,
+      cartCount,
+      total
+   }, dispatch] = useReducer(cartReducer, initialState)
+
+   const setIsOpen = (value) => {
+      dispatch({
+         type: actionTypes.setIsOpen,
+         payload: value
+      })
+   }
 
    const addCartItem = (product) => {
-      setCartItems(addProduct(cartItems, product))
+      dispatch({
+         type: actionTypes.setCartItems,
+         payload: addProduct(cartItems, product)
+      })
    }
 
    const removeTitle = (titleId) => {
-      setCartItems(cartItems.filter(item => item.id !== titleId))
+      dispatch({
+         type: actionTypes.setCartItems,
+         payload: cartItems.filter(item => item.id !== titleId)
+      })
    }
 
    const increaseOrder = (id) => {
-      setCartItems(addItem(cartItems, id))
+      dispatch({
+         type: actionTypes.setCartItems,
+         payload: addItem(cartItems, id)
+      })
    }
 
    const decreaseOrder = (id) => {
-      setCartItems(removeItem(cartItems, id))
+      dispatch({
+         type: actionTypes.setCartItems,
+         payload: removeItem(cartItems, id)
+      })
    }
 
    useEffect(() => {
-      setCartCount(
-         cartItems.reduce((acc, cartItem) => acc + cartItem.ordered, 0)
-      )
+      dispatch({
+         type: actionTypes.setCartCount,
+         payload: cartItems.reduce((acc, cartItem) => acc + cartItem.ordered, 0)
+      })
    }, [cartItems])
 
    useEffect(() => {
-      setTotal(
-         cartItems.reduce((total, cartItem) => {
+      dispatch({
+         type: actionTypes.setTotal,
+         payload: cartItems.reduce((total, cartItem) => {
             return total + cartItem.ordered * cartItem.price
          }, 0)
-      )
+      })
    }, [cartItems])
 
    const value = {
