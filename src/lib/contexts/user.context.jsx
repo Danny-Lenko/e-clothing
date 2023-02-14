@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from "../utils/firebase.utils";
 
 export const UserContext = createContext({
@@ -6,13 +6,38 @@ export const UserContext = createContext({
    setUser: () => null
 })
 
+export const actionTypes = {
+   setUser: 'setUser'
+}
+
+const userReducer = (state, action) => {
+   const { type, payload } = action
+
+   switch (type) {
+      case actionTypes.setUser:
+         return {
+            ...state,
+            user: payload
+         }
+
+      default:
+         throw new Error()
+   }
+}
+
+const initialState = {
+   user: null
+}
+
 export const UserContextProvider = ({ children }) => {
-   const [user, setUser] = useState(null)
-   const value = { user, setUser }
+   const [{ user }, dispatch] = useReducer(userReducer, initialState)
+
+   const setUser = (user) => {
+      dispatch({type: actionTypes.setUser, payload: user})
+   }
 
    useEffect(() => {
       const unsubscribe = onAuthStateChangedListener(async (user) => {
-         // console.log(user)
          if (user) {
             await createUserDocumentFromAuth(user);
          }
@@ -21,6 +46,8 @@ export const UserContextProvider = ({ children }) => {
 
       return unsubscribe
    }, [])
+
+   const value = { user }
 
    return (
       <UserContext.Provider value={value}>
