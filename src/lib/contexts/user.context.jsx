@@ -21,7 +21,7 @@ const userReducer = (state, action) => {
          }
 
       default:
-         throw new Error()
+         throw new Error(`failed to dispatch ${type} type action`)
    }
 }
 

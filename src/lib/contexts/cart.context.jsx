@@ -1,45 +1,32 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 export const CartContext = createContext({
    isOpen: null,
    cartItems: null,
    cartCount: null,
-   total: null,
-   setIsOpen: () => null,
-   setCartItems: () => null,
-   setCartCount: () => null,
-   setTotal: () => null,
+   cartTotal: null,
+   updatePayload: () => null,
 })
 
 const initialState = {
    isOpen: null,
    cartItems: [],
-   cartCount: null,
-   total: null
+   cartCount: 0,
+   cartTotal: 0
 }
 
 export const actionTypes = {
-   setIsOpen: 'setIsOpen',
-   setCartItems: 'setCartItems',
-   setCartCount: 'setCartCount',
-   setTotal: 'setTotal'
+   updatePayload: 'updatePayload'
 }
 
 const cartReducer = (state, action) => {
    const { type, payload } = action
 
    switch (type) {
-      case actionTypes.setIsOpen:
-         return { ...state, isOpen: payload }
-      case actionTypes.setCartItems:
-         return { ...state, cartItems: payload }
-      case actionTypes.setCartCount:
-         return { ...state, cartCount: payload }
-      case actionTypes.setTotal:
-         return { ...state, total: payload }
-
+      case actionTypes.updatePayload:
+         return { ...state, ...payload }
       default:
-         throw new Error()
+         throw new Error(`failed to dispatch ${type} type action`)
    }
 }
 
@@ -74,74 +61,66 @@ const removeItem = (cartItems, id) => {
 }
 
 export const CartContextProvider = ({ children }) => {
-   const [{
-      isOpen,
-      cartItems,
-      cartCount,
-      total
-   }, dispatch] = useReducer(cartReducer, initialState)
+   const [state, dispatch] = useReducer(cartReducer, initialState)
+   const { isOpen, cartItems, cartCount, cartTotal } = state
 
    const setIsOpen = (value) => {
       dispatch({
-         type: actionTypes.setIsOpen,
-         payload: value
+         type: actionTypes.updatePayload,
+         payload: { ...state, isOpen: value }
       })
    }
 
    const addCartItem = (product) => {
-      dispatch({
-         type: actionTypes.setCartItems,
-         payload: addProduct(cartItems, product)
-      })
+      const newCartItems = addProduct(cartItems, product)
+      updateCartItemsReducer(newCartItems)
    }
 
    const removeTitle = (titleId) => {
-      dispatch({
-         type: actionTypes.setCartItems,
-         payload: cartItems.filter(item => item.id !== titleId)
-      })
+      const newCartItems = cartItems.filter(item => item.id !== titleId)
+      updateCartItemsReducer(newCartItems)
    }
 
    const increaseOrder = (id) => {
-      dispatch({
-         type: actionTypes.setCartItems,
-         payload: addItem(cartItems, id)
-      })
+      const newCartItems = addItem(cartItems, id)
+      updateCartItemsReducer(newCartItems)
    }
 
    const decreaseOrder = (id) => {
+      const newCartItems = removeItem(cartItems, id)
+      updateCartItemsReducer(newCartItems)
+   }
+
+   const updateCartItemsReducer = (newCartItems) => {
+      const newCartCount = newCartItems.reduce(
+         (acc, cartItem) => acc + cartItem.ordered, 0
+      )
+      const newCartTotal = newCartItems.reduce((total, cartItem) => {
+         return total + cartItem.ordered * cartItem.price
+      }, 0)
+
+      const newState = {
+         cartItems: newCartItems,
+         cartCount: newCartCount,
+         cartTotal: newCartTotal
+      }
+
       dispatch({
-         type: actionTypes.setCartItems,
-         payload: removeItem(cartItems, id)
+         type: actionTypes.updatePayload,
+         payload: newState
       })
    }
 
-   useEffect(() => {
-      dispatch({
-         type: actionTypes.setCartCount,
-         payload: cartItems.reduce((acc, cartItem) => acc + cartItem.ordered, 0)
-      })
-   }, [cartItems])
-
-   useEffect(() => {
-      dispatch({
-         type: actionTypes.setTotal,
-         payload: cartItems.reduce((total, cartItem) => {
-            return total + cartItem.ordered * cartItem.price
-         }, 0)
-      })
-   }, [cartItems])
-
    const value = {
       isOpen,
-      setIsOpen,
       cartItems,
-      addCartItem,
       cartCount,
+      cartTotal,
+      setIsOpen,
+      addCartItem,
       removeTitle,
       increaseOrder,
-      decreaseOrder,
-      total
+      decreaseOrder
    }
 
    return (
