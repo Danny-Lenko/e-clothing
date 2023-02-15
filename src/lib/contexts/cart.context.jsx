@@ -67,7 +67,7 @@ export const CartContextProvider = ({ children }) => {
    const setIsOpen = (value) => {
       dispatch({
          type: actionTypes.updatePayload,
-         payload: { ...state, isOpen: value }
+         payload: { isOpen: value }
       })
    }
 
