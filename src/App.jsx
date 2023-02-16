@@ -7,10 +7,12 @@ import Auth from './routes/auth/auth.route';
 import Navigation from './components/navigation/navigation.component';
 import Checkout from './routes/checkout/checkout.route';
 import { 
-  onAuthStateChangedListener, 
-  createUserDocumentFromAuth 
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+  getCategoriesAndDocuments
 } from './lib/utils/firebase.utils';
 import { setUser } from './lib/store/user/user.action';
+import { setCategories } from './lib/store/categories/categories.action';
 import './app.styles.scss'
 
 function App() {
@@ -26,6 +28,14 @@ function App() {
 
     return unsubscribe
   }, [])
+
+  useEffect(() => {
+    const getCategories = async () => {
+       const categories = await getCategoriesAndDocuments()
+       dispatch(setCategories(categories))
+    }
+    getCategories()
+ }, [])
 
   return (
     <Routes>

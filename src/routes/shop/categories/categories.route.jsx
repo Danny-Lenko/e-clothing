@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { CategoriesContext } from "../../../lib/contexts/categories.context";
+import { useSelector } from "react-redux";
+import { selectCategories } from "../../../lib/store/categories/categories.selector";
 import CategoryPreview from "../../../components/category-preview/category-preview.component";
 
 const Categories = () => {
-   const { categories } = useContext(CategoriesContext)
+   const categories = useSelector(selectCategories)
 
    if (!categories) return <h2>Loading...</h2>
 

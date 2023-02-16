@@ -1,3 +1,3 @@
 export const userActionTypes = {
-   setUser: 'setUser'
+   setUser: 'user/setUser'
 }
