@@ -1,12 +1,10 @@
-export const userActionTypes = {
-   setUser: 'setUser'
-}
+import { userActionTypes } from "./user.types"
 
 const initialState = {
    user: null
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action = {}) => {
    const { type, payload } = action
 
    switch (type) {
@@ -19,5 +17,3 @@ export const userReducer = (state = initialState, action) => {
          return state
    }
 }
-
-
