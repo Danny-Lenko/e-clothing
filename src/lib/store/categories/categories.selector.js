@@ -1,8 +1,13 @@
-export const selectCategories = (state) => {
-   return state.categories.categories &&
-      state.categories.categories.reduce((acc, docSnapshot) => {
+import { createSelector } from 'reselect'
+
+const categories = (state) => state.categories
+
+export const selectCategories = createSelector(
+   [categories],
+   (categories) =>
+      categories.categories.reduce((acc, docSnapshot) => {
          const { title, items } = docSnapshot
          acc[title.toLowerCase()] = items
          return acc
       }, {})
-}
+)

@@ -8,7 +8,7 @@ const Categories = () => {
    return (
       <>
          {
-            categories && Object.keys(categories).map(title => {
+            Object.keys(categories).map(title => {
                const products = categories[title]
                return <CategoryPreview
                   key={title}

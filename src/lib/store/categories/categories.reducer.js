@@ -1,7 +1,7 @@
 import { categoriesActionTypes } from "./categories.types"
 
 const initialState = {
-   categories: null
+   categories: []
 }
 
 export const categoriesReducer = (state = initialState, action = {}) => {
