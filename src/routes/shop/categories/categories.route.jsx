@@ -5,12 +5,10 @@ import CategoryPreview from "../../../components/category-preview/category-previ
 const Categories = () => {
    const categories = useSelector(selectCategories)
 
-   if (!categories) return <h2>Loading...</h2>
-
    return (
       <>
          {
-            Object.keys(categories).map(title => {
+            categories && Object.keys(categories).map(title => {
                const products = categories[title]
                return <CategoryPreview
                   key={title}

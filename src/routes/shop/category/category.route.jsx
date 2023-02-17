@@ -8,10 +8,10 @@ import { Title, Container } from "./category.styles";
 const Category = () => {
    const { category } = useParams()
    const categories = useSelector(selectCategories)
-   const [products, setProducts] = useState(categories[category])
+   const [products, setProducts] = useState(null)
 
    useEffect(() => {
-      setProducts(categories[category])
+      setProducts(categories ? categories[category] : null)
    }, [category, categories])
 
    return (
