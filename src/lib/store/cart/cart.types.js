@@ -1,3 +1,4 @@
 export const cartActionTypes = {
-   updatePayload: 'cart/updatePayload'
+   setIsOpen: 'cart/setIsOpen',
+   setCartItems: 'cart/setCartItems'
 }
