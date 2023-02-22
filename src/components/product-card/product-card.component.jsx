@@ -1,6 +1,5 @@
-import { useContext } from 'react'
 import Button, { BUTTON_TYPES } from '../button/button.component'
-import { CartContext } from '../../lib/contexts/cart.context'
+import { useCartUtils } from '../../lib/store/cart/useCartUtils'
 import {
    Container,
    Footer,
@@ -10,7 +9,7 @@ import {
 
 const ProductCard = ({ product }) => {
    const { name, imageUrl, price } = product
-   const { addCartItem } = useContext(CartContext)
+   const { addCartItem } = useCartUtils()
 
    const handleClick = () => {
       addCartItem(product)

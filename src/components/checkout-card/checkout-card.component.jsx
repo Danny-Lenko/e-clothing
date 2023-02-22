@@ -1,9 +1,10 @@
 import { useContext } from "react";
-import { CartContext } from "../../lib/contexts/cart.context";
+import { useCartUtils } from "../../lib/store/cart/useCartUtils";
+import { CartContext } from "../../lib/store/cart/useCartUtils";
 import { Container, ImgContainer } from './checkout-card.styles'
 
 const CheckoutCard = ({ item }) => {
-   const { removeTitle, increaseOrder, decreaseOrder } = useContext(CartContext)
+   const { removeTitle, increaseOrder, decreaseOrder } = useCartUtils()
    const { id, name, imageUrl, price, ordered } = item
 
    const handleRemove = () => {
