@@ -1,15 +1,21 @@
-import { categoriesActionTypes } from "./categories.types"
+import { categoriesActionTypes } from './categories.types'
 
 const initialState = {
-   categories: []
+   categories: [],
+   loading: false,
+   error: null,
 }
 
 export const categoriesReducer = (state = initialState, action = {}) => {
    const { type, payload } = action
 
    switch (type) {
-      case categoriesActionTypes.setCategory:
-         return { ...state, categories: payload }
+      case categoriesActionTypes.fetchCategoriesStart:
+         return { ...state, loading: true }
+      case categoriesActionTypes.fetchCategoriesSuccess:
+         return { ...state, categories: payload, loading: false }
+      case categoriesActionTypes.fetchCategoriesError:
+         return { ...state, error: payload, loading: false }
       default:
          return state
    }

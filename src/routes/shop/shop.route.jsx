@@ -1,14 +1,34 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
-import Categories from './categories/categories.route';
-import Category from './category/category.route';
+import Categories from './categories/categories.route'
+import Category from './category/category.route'
+import { fetchCategoriesAsync } from '../../lib/store/categories/categories.action'
+import { selectCategoriesLoading } from '../../lib/store/categories/categories.selector'
+import Spinner from '../../components/spinner/spinner.component'
 
 const Shop = () => {
+   const dispatch = useDispatch()
+   const loading = useSelector(selectCategoriesLoading)
+
+   useEffect(() => {
+      dispatch(fetchCategoriesAsync())
+   }, [])
+
+   console.log(loading)
+
    return (
-      <Routes>
-         <Route index element={<Categories />} />
-         <Route path=':category' element={<Category />} />
-      </Routes>
-   );
+      <>
+         {loading ? (
+            <Spinner />
+         ) : (
+            <Routes>
+               <Route index element={<Categories />} />
+               <Route path=":category" element={<Category />} />
+            </Routes>
+         )}
+      </>
+   )
 }
 
-export default Shop;
+export default Shop
