@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import Categories from './categories/categories.route'
 import Category from './category/category.route'
-import { fetchCategoriesAsync } from '../../lib/store/categories/categories.action'
+import { fetchCategoriesStart } from '../../lib/store/categories/categories.action'
 import { selectCategoriesLoading } from '../../lib/store/categories/categories.selector'
 import Spinner from '../../components/spinner/spinner.component'
 
@@ -12,7 +12,7 @@ const Shop = () => {
    const loading = useSelector(selectCategoriesLoading)
 
    useEffect(() => {
-      dispatch(fetchCategoriesAsync())
+      dispatch(fetchCategoriesStart())
    }, [])
 
    console.log(loading)
