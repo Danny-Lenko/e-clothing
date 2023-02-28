@@ -9,22 +9,17 @@ import Checkout from './routes/checkout/checkout.route'
 import {
    onAuthStateChangedListener,
    createUserDocumentFromAuth,
+   getCurrentUser,
 } from './lib/utils/firebase.utils'
 import { setUser } from './lib/store/user/user.action'
 import './app.styles.scss'
+import { checkIsUser } from './lib/store/user/user.action'
 
 function App() {
    const dispatch = useDispatch()
 
    useEffect(() => {
-      const unsubscribe = onAuthStateChangedListener(async (user) => {
-         if (user) {
-            await createUserDocumentFromAuth(user)
-         }
-         dispatch(setUser(user))
-      })
-
-      return unsubscribe
+      dispatch(checkIsUser())
    }, [])
 
    return (
