@@ -3,6 +3,8 @@ import { signInWithGooglePopup, signInUserWithEmailAndPassword } from "../../lib
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import { Container, BtnContainer } from "./sign-in-form.styles";
+import { useDispatch } from "react-redux";
+import { emailSignInStart, googleSingInStart } from "../../lib/store/user/user.action";
 
 const formDefaultValues = {
    email: '',
@@ -12,6 +14,7 @@ const formDefaultValues = {
 const SignInForm = () => {
    const [formValues, setFormValues] = useState(formDefaultValues)
    const { email, password } = formValues
+   const dispatch = useDispatch()
 
    const handleChange = (event) => {
       const { name, value } = event.target
@@ -20,30 +23,38 @@ const SignInForm = () => {
 
    const handleSubmit = async (event) => {
       event.preventDefault()
+      dispatch(emailSignInStart(email, password))
+      clearForm()
+      
 
-      try {
-         await signInUserWithEmailAndPassword(email, password)
-         clearForm()
-      } catch (error) {
-         switch (error.code) {
-            case 'auth/wrong-password':
-               alert('incorrect password for email');
-               break;
-            case 'auth/user-not-found':
-               alert('no user associated with this email');
-               break;
-            default:
-               console.log(error);
-         }
-      }
+      // try {
+      //    await signInUserWithEmailAndPassword(email, password)
+      //    clearForm()
+      // } catch (error) {
+      //    switch (error.code) {
+      //       case 'auth/wrong-password':
+      //          alert('incorrect password for email');
+      //          break;
+      //       case 'auth/user-not-found':
+      //          alert('no user associated with this email');
+      //          break;
+      //       default:
+      //          console.log(error);
+      //    }
+      // }
    }
 
    const clearForm = () => {
       setFormValues(formDefaultValues)
    }
 
+   // const logGoogleUser = async () => {
+   //    await signInWithGooglePopup();
+   // };
+
+   
    const logGoogleUser = async () => {
-      await signInWithGooglePopup();
+      dispatch(googleSingInStart())
    };
 
    return (

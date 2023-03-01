@@ -6,14 +6,9 @@ import Shop from './routes/shop/shop.route'
 import Auth from './routes/auth/auth.route'
 import Navigation from './components/navigation/navigation.component'
 import Checkout from './routes/checkout/checkout.route'
-import {
-   onAuthStateChangedListener,
-   createUserDocumentFromAuth,
-   getCurrentUser,
-} from './lib/utils/firebase.utils'
-import { setUser } from './lib/store/user/user.action'
-import './app.styles.scss'
 import { checkIsUser } from './lib/store/user/user.action'
+
+import './app.styles.scss'
 
 function App() {
    const dispatch = useDispatch()
