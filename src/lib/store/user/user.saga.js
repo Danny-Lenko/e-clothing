@@ -6,6 +6,7 @@ import {
    signInUserWithEmailAndPassword,
    signInWithGooglePopup,
    createAuthUserWithEmailAndPassword,
+   signOutUser,
 } from '../../utils/firebase.utils'
 
 import {
@@ -13,6 +14,8 @@ import {
    signInError,
    signUpError,
    signUpSuccess,
+   signOutError,
+   signOutSuccess,
 } from './user.action'
 
 export function* getUserSnapshot(userAuth, additionalData) {
@@ -83,7 +86,12 @@ export function* signInWhenSignUp({ payload: { user, additionalData } }) {
 }
 
 export function* signOut() {
-   
+   try {
+      yield call(signOutUser)
+      yield put(signOutSuccess())
+   } catch (error) {
+      yield put(signOutError(error))
+   }
 }
 
 export function* onCheckIsUser() {
@@ -117,6 +125,6 @@ export function* userSagas() {
       call(onGoogleSignInStart),
       call(onSignUpStart),
       call(onSingUpSuccess),
-      call(onSignOutStart)
+      call(onSignOutStart),
    ])
 }
