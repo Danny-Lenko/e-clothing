@@ -5,13 +5,14 @@ import {
    getCurrentUser,
    signInUserWithEmailAndPassword,
    signInWithGooglePopup,
+   createAuthUserWithEmailAndPassword,
 } from '../../utils/firebase.utils'
 
 import {
-   singInSuccess,
+   signInSuccess,
    signInError,
-   emailSignInStart,
-   googleSingInStart,
+   signUpError,
+   signUpSuccess,
 } from './user.action'
 
 export function* getUserSnapshot(userAuth, additionalData) {
@@ -21,7 +22,7 @@ export function* getUserSnapshot(userAuth, additionalData) {
          userAuth,
          additionalData
       )
-      yield put(singInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }))
+      yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }))
    } catch (error) {
       yield put(signInError(error))
    }
@@ -46,28 +47,43 @@ export function* signInWithEmail({ payload: { email, password } }) {
       )
       yield call(getUserSnapshot, user)
    } catch (error) {
-      switch (error.code) {
-         case 'auth/wrong-password':
-            yield put(signInError(error))
-            alert('incorrect password for email')
-            break
-         case 'auth/user-not-found':
-            yield put(signInError(error))
-            alert('no user associated with this email')
-            break
-         default:
-            console.log(error)
-      }
+      yield put(signInError(error))
    }
 }
 
-export function* singInWithGoogle() {
+export function* signInWithGoogle() {
    try {
       const { user } = yield call(signInWithGooglePopup)
       yield call(getUserSnapshot, user)
    } catch (error) {
       yield put(signInError(error))
    }
+}
+
+export function* signUp({ payload: { email, password, displayName } }) {
+   try {
+      const { user } = yield call(
+         createAuthUserWithEmailAndPassword,
+         email,
+         password
+      )
+
+      yield put(signUpSuccess(user, { displayName }))
+   } catch (error) {
+      yield put(signUpError(error))
+   }
+}
+
+export function* signInWhenSignUp({ payload: { user, additionalData } }) {
+   try {
+      yield call(getUserSnapshot, user, additionalData)
+   } catch (error) {
+      yield put(signInError(error))
+   }
+}
+
+export function* signOut() {
+   
 }
 
 export function* onCheckIsUser() {
@@ -79,7 +95,19 @@ export function* onEmailSignInStart() {
 }
 
 export function* onGoogleSignInStart() {
-   yield takeLatest(userActionTypes.googleSingInStart, singInWithGoogle)
+   yield takeLatest(userActionTypes.googleSignInStart, signInWithGoogle)
+}
+
+export function* onSignUpStart() {
+   yield takeLatest(userActionTypes.signUpStart, signUp)
+}
+
+export function* onSingUpSuccess() {
+   yield takeLatest(userActionTypes.signUpSuccess, signInWhenSignUp)
+}
+
+export function* onSignOutStart() {
+   yield takeLatest(userActionTypes.signOutStart, signOut)
 }
 
 export function* userSagas() {
@@ -87,5 +115,8 @@ export function* userSagas() {
       call(onCheckIsUser),
       call(onEmailSignInStart),
       call(onGoogleSignInStart),
+      call(onSignUpStart),
+      call(onSingUpSuccess),
+      call(onSignOutStart)
    ])
 }

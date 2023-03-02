@@ -4,24 +4,44 @@ import { userActionTypes } from './user.types'
 export const setUser = (user) => createAction(userActionTypes.setUser, user)
 
 // export const userActionTypes = {
-//    // setUser: 'user/setUser'
 //    checkIsUser: 'user/checkIsUser',
-//    googleSingInStart: 'user/googleSingInStart',
-//    emailSignInStart: 'user/emailSingInStart',
-//    singInSuccess: 'user/singInSuccess',
-//    singInError: 'user/signInError',
+//    googleSignInStart: 'user/googleSignInStart',
+//    emailSignInStart: 'user/emailSignInStart',
+//    signInSuccess: 'user/signInSuccess',
+//    signInError: 'user/signInError',
+//    signUpStart: 'user/signUpStart',
+//    signUpSuccess: 'user/signUpSuccess',
+//    signUpError: 'user/signUpError'
 // }
 
 export const checkIsUser = () => createAction(userActionTypes.checkIsUser)
 
-export const googleSingInStart = () =>
-   createAction(userActionTypes.googleSingInStart)
+export const googleSignInStart = () =>
+   createAction(userActionTypes.googleSignInStart)
 
 export const emailSignInStart = (email, password) =>
    createAction(userActionTypes.emailSignInStart, { email, password })
 
-export const singInSuccess = (user) =>
-   createAction(userActionTypes.singInSuccess, user)
+export const signInSuccess = (user) =>
+   createAction(userActionTypes.signInSuccess, user)
 
-export const signInError = (error) => 
-   createAction(userActionTypes.singInError, error)
+export const signInError = (error) =>
+   createAction(userActionTypes.signInError, error)
+
+export const signUpStart = (email, password, displayName) =>
+   createAction(userActionTypes.signUpStart, { email, password, displayName })
+
+export const signUpSuccess = (user, additionalData) =>
+   createAction(userActionTypes.signUpSuccess, { user, additionalData })
+
+export const signUpError = (error) =>
+   createAction(userActionTypes.signUpError, error)
+
+export const signOutStart = () =>
+   createAction(userActionTypes.signOutStart)
+
+export const signOutSuccess = () =>
+   createAction(userActionTypes.signOutSuccess)
+
+export const signOutError = (error) =>
+   createAction(userActionTypes.signOutError, error)

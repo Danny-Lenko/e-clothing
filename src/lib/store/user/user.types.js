@@ -1,8 +1,13 @@
 export const userActionTypes = {
-   // setUser: 'user/setUser'
    checkIsUser: 'user/checkIsUser',
-   googleSingInStart: 'user/googleSingInStart',
-   emailSignInStart: 'user/emailSingInStart',
-   singInSuccess: 'user/singInSuccess',
-   singInError: 'user/signInError'
+   googleSignInStart: 'user/googleSignInStart',
+   emailSignInStart: 'user/emailSignInStart',
+   signInSuccess: 'user/signInSuccess',
+   signInError: 'user/signInError',
+   signUpStart: 'user/signUpStart',
+   signUpSuccess: 'user/signUpSuccess',
+   signUpError: 'user/signUpError',
+   signOutStart: 'user/signOutStart',
+   signOutSuccess: 'user/signOutSuccess',
+   signOutError: 'user/signOutError'
 }

@@ -10,12 +10,12 @@ export const userReducer = (state = initialState, action = {}) => {
    const { type, payload } = action
 
    switch (type) {
-      case userActionTypes.singInSuccess:
+      case userActionTypes.signInSuccess:
          return {
             ...state,
             user: payload,
          }
-      case userActionTypes.singInError:
+      case userActionTypes.signInError:
          return { ...state, error: payload }
       default:
          return state
