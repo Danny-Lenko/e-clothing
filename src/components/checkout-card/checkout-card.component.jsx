@@ -1,27 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
-   removeTitle,
+   removeProduct,
    increaseOrder,
    decreaseOrder,
-} from '../../lib/store/cart/cart.action'
-import { selectCartItems } from '../../lib/store/cart/cart.selector'
+} from '../../lib/store/cart/cart.slice'
 import { Container, ImgContainer } from './checkout-card.styles'
 
 const CheckoutCard = ({ item }) => {
-   const cartItems = useSelector(selectCartItems)
    const dispatch = useDispatch()
    const { id, name, imageUrl, price, ordered } = item
 
    const handleRemove = () => {
-      dispatch(removeTitle(cartItems, id))
+      dispatch(removeProduct(id))
    }
 
    const handleIncrease = () => {
-      dispatch(increaseOrder(cartItems, id))
+      dispatch(increaseOrder(id))
    }
 
    const handleDecrease = () => {
-      dispatch(decreaseOrder(cartItems, id))
+      dispatch(decreaseOrder(id))
    }
 
    return (
