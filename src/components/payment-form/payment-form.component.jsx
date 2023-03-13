@@ -1,5 +1,9 @@
 import { BUTTON_TYPES } from '../button/button.component'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '../../lib/store/user/user.selector'
+import { selectCartTotal } from '../../lib/store/cart/cart.selector'
+import { useState } from 'react'
 import {
    PaymentFormContainer,
    FormContainer,
@@ -9,6 +13,10 @@ import {
 const PaymentForm = () => {
    const stripe = useStripe()
    const elements = useElements()
+   const user = useSelector(selectCurrentUser)
+   const total = useSelector(selectCartTotal)
+
+   const [isLoading, setIsLoading] = useState(false)
 
    const handlePayment = async (e) => {
       e.preventDefault()
@@ -17,6 +25,8 @@ const PaymentForm = () => {
          return
       }
 
+      setIsLoading(true)
+
       const response = await fetch(
          '/.netlify/functions/create-payment-intent',
          {
@@ -24,7 +34,7 @@ const PaymentForm = () => {
             headers: {
                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ amount: 10000 }),
+            body: JSON.stringify({ amount: total * 100 }),
          }
       ).then((res) => {
          return res.json()
@@ -36,10 +46,12 @@ const PaymentForm = () => {
          payment_method: {
             card: elements.getElement(CardElement),
             billing_details: {
-               name: 'Danny Lenko',
+               name: user ? user.displayName : 'Guest',
             },
          },
       })
+
+      setIsLoading(false)
 
       if (paymentResult.error) {
          alert(paymentResult.error.message)
@@ -56,6 +68,7 @@ const PaymentForm = () => {
             <h2>Credit Card Payment:</h2>
             <CardElement />
             <PaymentButton
+               isLoading={isLoading}
                onClick={handlePayment}
                buttonType={BUTTON_TYPES.inverted}
             >
