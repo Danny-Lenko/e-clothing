@@ -7,6 +7,7 @@ import {
    Col,
    Total
 } from "./checkout.styles";
+import PaymentForm from "../../components/payment-form/payment-form.component";
 
 const Checkout = () => {
    const cartItems = useSelector(selectCartItems)
@@ -37,6 +38,8 @@ const Checkout = () => {
             cartItems.map(item => <CheckoutCard key={item.id} item={item} />)
          }
          <Total>Total: ${cartTotal}</Total>
+
+         <PaymentForm/>
       </Container>
    );
 }
