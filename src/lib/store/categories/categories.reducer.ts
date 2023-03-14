@@ -1,4 +1,5 @@
 import { categoriesActionTypes } from './categories.types'
+import { CategoryAction } from './categories.action'
 
 const initialState = {
    categories: [],
@@ -6,7 +7,7 @@ const initialState = {
    error: null,
 }
 
-export const categoriesReducer = (state = initialState, action = {}) => {
+export const categoriesReducer = (state = initialState, action = {} as CategoryAction) => {
    const { type, payload } = action
 
    switch (type) {
