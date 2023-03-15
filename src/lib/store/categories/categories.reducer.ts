@@ -1,22 +1,29 @@
 import { categoriesActionTypes } from './categories.types'
-import { CategoryAction } from './categories.action'
+import { CategoryAction, Categories } from './categories.action'
 
-const initialState = {
+export type CategoriesState = {
+   readonly categories: Categories[]
+   readonly loading: boolean
+   readonly error: Error | null
+}
+
+const initialState: CategoriesState = {
    categories: [],
    loading: false,
    error: null,
 }
 
-export const categoriesReducer = (state = initialState, action = {} as CategoryAction) => {
-   const { type, payload } = action
-
-   switch (type) {
+export const categoriesReducer = (
+   state = initialState,
+   action = {} as CategoryAction
+) => {
+   switch (action.type) {
       case categoriesActionTypes.fetchCategoriesStart:
          return { ...state, loading: true }
       case categoriesActionTypes.fetchCategoriesSuccess:
-         return { ...state, categories: payload, loading: false }
+         return { ...state, categories: action.payload, loading: false }
       case categoriesActionTypes.fetchCategoriesError:
-         return { ...state, error: payload, loading: false }
+         return { ...state, error: action.payload, loading: false }
       default:
          return state
    }

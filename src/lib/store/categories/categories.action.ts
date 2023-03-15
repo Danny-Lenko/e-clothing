@@ -2,13 +2,18 @@ import { createAction, ActionWithPayload } from '../../utils/createAction.utils'
 import { categoriesActionTypes } from './categories.types'
 import { Action } from '../../utils/createAction.utils'
 
-type CategoryItem = {
+export type CategoryItem = {
    id: number
    imageUrl: string
    price: number
    name: string
 }
-type Categories = Record<string, CategoryItem[]>
+
+export type Categories = {
+   id: number
+   title: string
+   items: CategoryItem[]
+}
 
 export type FetchCategoriesStart =
    Action<categoriesActionTypes.fetchCategoriesStart>
