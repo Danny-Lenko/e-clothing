@@ -1,6 +1,10 @@
-import { createAction, ActionWithPayload } from '../../utils/createAction.utils'
+import {
+   createAction,
+   ActionWithPayload,
+   Action,
+   withMatcher,
+} from '../../utils/createAction.utils'
 import { categoriesActionTypes } from './categories.types'
-import { Action } from '../../utils/createAction.utils'
 
 export type CategoryItem = {
    id: number
@@ -9,7 +13,7 @@ export type CategoryItem = {
    name: string
 }
 
-export type Categories = {
+export type Category = {
    id: number
    title: string
    items: CategoryItem[]
@@ -20,7 +24,7 @@ export type FetchCategoriesStart =
 
 export type FetchCategoriesSuccess = ActionWithPayload<
    categoriesActionTypes.fetchCategoriesSuccess,
-   Categories
+   Category[]
 >
 
 export type FetchCategoriesError = ActionWithPayload<
@@ -28,18 +32,17 @@ export type FetchCategoriesError = ActionWithPayload<
    Error
 >
 
-export type CategoryAction =
-   | FetchCategoriesStart
-   | FetchCategoriesSuccess
-   | FetchCategoriesError
+export const fetchCategoriesStart = withMatcher(
+   (): FetchCategoriesStart =>
+      createAction(categoriesActionTypes.fetchCategoriesStart)
+)
 
-export const fetchCategoriesStart = (): FetchCategoriesStart =>
-   createAction(categoriesActionTypes.fetchCategoriesStart)
+export const fetchCategoriesSuccess = withMatcher(
+   (categories: Category[]): FetchCategoriesSuccess =>
+      createAction(categoriesActionTypes.fetchCategoriesSuccess, categories)
+)
 
-export const fetchCategoriesSuccess = (
-   categories: Categories
-): FetchCategoriesSuccess =>
-   createAction(categoriesActionTypes.fetchCategoriesSuccess, categories)
-
-export const fetchCategoriesError = (error: Error): FetchCategoriesError =>
-   createAction(categoriesActionTypes.fetchCategoriesError, error)
+export const fetchCategoriesError = withMatcher(
+   (error: Error): FetchCategoriesError =>
+      createAction(categoriesActionTypes.fetchCategoriesError, error)
+)
