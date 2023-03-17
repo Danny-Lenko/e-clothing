@@ -13,6 +13,8 @@ const Checkout = () => {
    const cartItems = useSelector(selectCartItems)
    const cartTotal = useSelector(selectCartTotal)
 
+   console.log(cartItems)
+
    if (!cartItems.length) return <h2>Cart is Empty</h2>
 
    return (

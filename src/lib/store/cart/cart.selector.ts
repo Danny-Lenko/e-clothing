@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { ICartItem } from './cart.slice';
 
 const selectCartReducer = (state) => state.cart
 
@@ -12,11 +13,11 @@ export const selectCartItems = createSelector(
    (cart) => cart.cartItems
 )
 
-export const selectCartCount = createSelector([selectCartItems], (cartItems) =>
+export const selectCartCount = createSelector([selectCartItems], (cartItems: ICartItem[]) =>
    cartItems.reduce((acc, cartItem) => acc + cartItem.ordered, 0)
 )
 
-export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
+export const selectCartTotal = createSelector([selectCartItems], (cartItems: ICartItem[]) =>
    cartItems.reduce((total, cartItem) => {
       return total + cartItem.ordered * cartItem.price
    }, 0)

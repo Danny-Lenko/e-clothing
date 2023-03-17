@@ -1,7 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-   isOpen: null,
+export interface ICartItem {
+   name: string
+   price: number
+   id: number
+   imageUrl: string
+   ordered: number
+}
+
+interface IInitialState {
+   isOpen: boolean
+   cartItems: ICartItem[]
+}
+
+type SetCartItems = (cartItems: ICartItem[], id: number) => ICartItem[]
+
+const initialState: IInitialState = {
+   isOpen: false,
    cartItems: [],
 }
 
@@ -36,7 +51,7 @@ export const {
 } = cartSlice.actions
 export const cartReducer = cartSlice.reducer
 
-const addProductHelper = (cartItems, product) => {
+const addProductHelper = (cartItems: ICartItem[], product: ICartItem) => {
    const chosenProduct = cartItems.find((item) => item.id === product.id)
 
    if (!chosenProduct) {
@@ -48,17 +63,17 @@ const addProductHelper = (cartItems, product) => {
    )
 }
 
-const removeProductHelper = (cartItems, productId) => {
+const removeProductHelper: SetCartItems = (cartItems, productId) => {
    return cartItems.filter((item) => item.id !== productId)
 }
 
-const increaseOrderHelper = (cartItems, id) => {
+const increaseOrderHelper: SetCartItems = (cartItems, id) => {
    return cartItems.map((item) =>
       item.id === id ? { ...item, ordered: item.ordered + 1 } : item
    )
 }
 
-const decreaseOrderHelper = (cartItems, id) => {
+const decreaseOrderHelper: SetCartItems = (cartItems, id) => {
    return cartItems
       .map((item) => {
          if (item.id !== id) return item
