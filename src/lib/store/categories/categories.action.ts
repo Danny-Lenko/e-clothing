@@ -4,20 +4,7 @@ import {
    Action,
    withMatcher,
 } from '../../utils/createAction.utils'
-import { categoriesActionTypes } from './categories.types'
-
-export type CategoryItem = {
-   id: number
-   imageUrl: string
-   price: number
-   name: string
-}
-
-export type Category = {
-   id: number
-   title: string
-   items: CategoryItem[]
-}
+import { categoriesActionTypes, Category } from './categories.types'
 
 export type FetchCategoriesStart =
    Action<categoriesActionTypes.fetchCategoriesStart>
