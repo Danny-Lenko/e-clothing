@@ -11,6 +11,7 @@ export const userReducer = (state = initialState, action = {}) => {
 
    switch (type) {
       case userActionTypes.signInSuccess:
+         console.log(payload)
          return {
             ...state,
             user: payload,
