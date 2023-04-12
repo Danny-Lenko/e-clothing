@@ -7,6 +7,8 @@ import {
    signInWithEmailAndPassword,
    signOut,
    onAuthStateChanged,
+   NextOrObserver,
+   User,
 } from 'firebase/auth'
 import {
    getFirestore,
@@ -41,9 +43,13 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
 
 export const db = getFirestore()
 
-export const addCollectionAndDocuments = async (
-   collectionKey,
-   objectsToAdd
+export type ObjectToAdd = {
+   title: string
+}
+
+export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
+   collectionKey: string,
+   objectsToAdd: T[]
 ) => {
    const batch = writeBatch(db)
    const collectionRef = collection(db, collectionKey)
@@ -65,7 +71,14 @@ export const getCategoriesAndDocuments = async () => {
    return querySnapshot.docs.map((doc) => doc.data())
 }
 
-export const createUserDocumentFromAuth = async (userAuth, additionalData) => {
+export type AdditionalData = {
+   displayName?: string
+}
+
+export const createUserDocumentFromAuth = async (
+   userAuth: User,
+   additionalData = {} as AdditionalData
+) => {
    if (!userAuth) return
 
    const userDocRef = doc(db, 'users', userAuth.uid)
@@ -83,20 +96,26 @@ export const createUserDocumentFromAuth = async (userAuth, additionalData) => {
             ...additionalData,
          })
       } catch (error) {
-         console.log('error creating the user', error.message)
+         console.log('error creating the user', error)
       }
    }
 
    return userSnapshot
 }
 
-export const createAuthUserWithEmailAndPassword = async (email, password) => {
+export const createAuthUserWithEmailAndPassword = async (
+   email: string,
+   password: string
+) => {
    if (!email || !password) return
 
    return await createUserWithEmailAndPassword(auth, email, password)
 }
 
-export const signInUserWithEmailAndPassword = async (email, password) => {
+export const signInUserWithEmailAndPassword = async (
+   email: string,
+   password: string
+) => {
    if (!email || !password) return
 
    return await signInWithEmailAndPassword(auth, email, password)
@@ -104,7 +123,7 @@ export const signInUserWithEmailAndPassword = async (email, password) => {
 
 export const signOutUser = async () => await signOut(auth)
 
-export const onAuthStateChangedListener = (callback) =>
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
    onAuthStateChanged(auth, callback)
 
 export const getCurrentUser = () => {
