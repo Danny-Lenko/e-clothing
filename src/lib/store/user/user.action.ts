@@ -12,9 +12,8 @@ import {
    SignUpError,
    SignOutStart,
    SignOutSuccess,
+   SignOutError,
 } from './user.types'
-
-// export const setUser = (user) => createAction(userActionTypes.setUser, user)
 
 export const checkIsUser = withMatcher(
    (): CheckIsUser => createAction(userActionTypes.checkIsUser)
@@ -66,6 +65,7 @@ export const signOutSuccess = withMatcher(
    (): SignOutSuccess => createAction(userActionTypes.signOutSuccess)
 )
 
-export const signOutError = withMatcher((error: Error) =>
-   createAction(userActionTypes.signOutError, error)
+export const signOutError = withMatcher(
+   (error: Error): SignOutError =>
+      createAction(userActionTypes.signOutError, error)
 )

@@ -66,7 +66,7 @@ export type SignOutStart = Action<userActionTypes.signOutStart>
 
 export type SignOutSuccess = Action<userActionTypes.signOutSuccess>
 
-export type signOutError = ActionWithPayload<
+export type SignOutError = ActionWithPayload<
    userActionTypes.signOutError,
    Error
 >
