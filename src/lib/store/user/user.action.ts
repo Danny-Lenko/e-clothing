@@ -1,4 +1,5 @@
 import { createAction, withMatcher } from '../../utils/createAction.utils'
+import { AdditionalData } from '../../utils/firebase.utils'
 import {
    userActionTypes,
    User,
@@ -48,7 +49,7 @@ export const signUpStart = withMatcher(
 )
 
 export const signUpSuccess = withMatcher(
-   (user: User, additionalData: any): SignUpSuccess =>
+   (user: User, additionalData: AdditionalData): SignUpSuccess =>
       createAction(userActionTypes.signUpSuccess, { user, additionalData })
 )
 

@@ -1,1 +1,3 @@
-export const selectCurrentUser = (state) => state.user.user
+import { RootState } from "../store"
+
+export const selectCurrentUser = (state: RootState) => state.user.user
