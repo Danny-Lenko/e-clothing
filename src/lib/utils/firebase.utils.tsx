@@ -20,6 +20,7 @@ import {
    query,
    getDocs,
 } from 'firebase/firestore'
+import { Category } from '../store/categories/categories.types'
 
 const firebaseConfig = {
    apiKey: 'AIzaSyAZkmmU-KjEGX1XijejLusvzz-UQ37Lh1I',
@@ -68,7 +69,7 @@ export const getCategoriesAndDocuments = async () => {
    const q = query(collectionRef)
 
    const querySnapshot = await getDocs(q)
-   return querySnapshot.docs.map((doc) => doc.data())
+   return querySnapshot.docs.map((doc) => doc.data()) as Category[]
 }
 
 export type AdditionalData = {
