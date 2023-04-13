@@ -1,4 +1,5 @@
 import { Action, ActionWithPayload } from '../../utils/createAction.utils'
+import { User } from 'firebase/auth';
 
 export enum userActionTypes {
    checkIsUser = 'user/checkIsUser',
@@ -14,10 +15,10 @@ export enum userActionTypes {
    signOutError = 'user/signOutError',
 }
 
-export type User = {
-   displayName: string
-   email: string
-   id: string
+export type UserData = {
+   createdAt: Date;
+   displayName: string;
+   email: string;
 }
 
 interface IEmailPassword {
@@ -45,7 +46,7 @@ export type EmailSignInStart = ActionWithPayload<
 
 export type SignInSuccess = ActionWithPayload<
    userActionTypes.signInSuccess,
-   User
+   UserData
 >
 
 export type SignInError = ActionWithPayload<userActionTypes.signInError, Error>

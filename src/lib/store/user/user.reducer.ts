@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { User } from './user.types'
+import { UserData } from './user.types'
 import {
    signInError,
    signInSuccess,
@@ -9,7 +9,7 @@ import {
 } from './user.action'
 
 export type UserState = {
-   readonly user: User | null
+   readonly user: UserData | null
    readonly loading: boolean
    readonly error: Error | null
 }

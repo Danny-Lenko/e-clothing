@@ -2,7 +2,7 @@ import { createAction, withMatcher } from '../../utils/createAction.utils'
 import { AdditionalData } from '../../utils/firebase.utils'
 import {
    userActionTypes,
-   User,
+   UserData,
    CheckIsUser,
    GoogleSignInStart,
    EmailSignInStart,
@@ -15,6 +15,8 @@ import {
    SignOutSuccess,
    SignOutError,
 } from './user.types'
+
+import { User } from 'firebase/auth'
 
 export const checkIsUser = withMatcher(
    (): CheckIsUser => createAction(userActionTypes.checkIsUser)
@@ -30,7 +32,7 @@ export const emailSignInStart = withMatcher(
 )
 
 export const signInSuccess = withMatcher(
-   (user: User): SignInSuccess =>
+   (user: UserData & {id: string}): SignInSuccess =>
       createAction(userActionTypes.signInSuccess, user)
 )
 

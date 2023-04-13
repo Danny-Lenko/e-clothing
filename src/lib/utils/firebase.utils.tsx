@@ -19,8 +19,10 @@ import {
    writeBatch,
    query,
    getDocs,
+   QueryDocumentSnapshot,
 } from 'firebase/firestore'
 import { Category } from '../store/categories/categories.types'
+import { UserData } from '../store/user/user.types'
 
 const firebaseConfig = {
    apiKey: 'AIzaSyAZkmmU-KjEGX1XijejLusvzz-UQ37Lh1I',
@@ -78,8 +80,8 @@ export type AdditionalData = {
 
 export const createUserDocumentFromAuth = async (
    userAuth: User,
-   additionalData = {} as AdditionalData
-) => {
+   additionalData: AdditionalData = {} as AdditionalData
+): Promise<QueryDocumentSnapshot<UserData> | void> => {
    if (!userAuth) return
 
    const userDocRef = doc(db, 'users', userAuth.uid)
@@ -101,7 +103,7 @@ export const createUserDocumentFromAuth = async (
       }
    }
 
-   return userSnapshot
+   return userSnapshot as QueryDocumentSnapshot<UserData>
 }
 
 export const createAuthUserWithEmailAndPassword = async (
@@ -127,7 +129,7 @@ export const signOutUser = async () => await signOut(auth)
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
    onAuthStateChanged(auth, callback)
 
-export const getCurrentUser = () => {
+export const getCurrentUser = (): Promise<User | null> => {
    return new Promise((resolve, reject) => {
       const unsubscribe = onAuthStateChanged(
          auth,
