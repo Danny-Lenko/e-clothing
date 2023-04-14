@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
+import {AuthError, AuthErrorCodes} from 'firebase/auth'
 import FormInput from '../form-input/form-input.component'
 import Button, { BUTTON_TYPES } from '../button/button.component'
 import { Container, BtnContainer } from './sign-in-form.styles'
@@ -18,19 +19,19 @@ const SignInForm = () => {
    const [formValues, setFormValues] = useState(formDefaultValues)
    const { email, password } = formValues
 
-   const handleChange = (event) => {
+   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target
       setFormValues({ ...formValues, [name]: value })
    }
 
-   const handleSubmit = async (event) => {
+   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       try {
          dispatch(emailSignInStart(email, password))
          clearForm()
       } catch (error) {
-         switch (error.code) {
-            case 'auth/wrong-password':
+         switch ((error as AuthError).code) {
+            case AuthErrorCodes.INVALID_PASSWORD:
                alert('incorrect password for email')
                break
             case 'auth/user-not-found':

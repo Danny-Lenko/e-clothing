@@ -18,7 +18,11 @@ export const Container = styled.div`
   }
 `
 
-export const Label = styled.label`
+interface Props {
+  shrink: boolean;
+}
+
+export const Label = styled.label<Props>`
   color: ${subColor};
   font-size: 16px;
   font-weight: normal;

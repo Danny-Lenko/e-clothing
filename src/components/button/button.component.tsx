@@ -21,8 +21,8 @@ const getButton = (type = BUTTON_TYPES.basic): typeof BasicButton =>
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
    children: React.ReactNode
-   buttonType: BUTTON_TYPES
-   isLoading: boolean
+   buttonType?: BUTTON_TYPES
+   isLoading?: boolean
 }
 
 const Button: React.FC<Props> = ({
