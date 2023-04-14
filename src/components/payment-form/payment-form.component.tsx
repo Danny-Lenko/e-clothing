@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react'
 import { BUTTON_TYPES } from '../button/button.component'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 import { useSelector } from 'react-redux'
@@ -18,7 +19,7 @@ const PaymentForm = () => {
 
    const [isLoading, setIsLoading] = useState(false)
 
-   const handlePayment = async (e) => {
+   const handlePayment = async (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
 
       if (!stripe || !elements) {
@@ -42,9 +43,13 @@ const PaymentForm = () => {
 
       const clientSecret = response.paymentIntent.client_secret
 
+      const cardContent = elements.getElement(CardElement)
+
+      if (cardContent === null) return
+
       const paymentResult = await stripe.confirmCardPayment(clientSecret, {
          payment_method: {
-            card: elements.getElement(CardElement),
+            card: cardContent,
             billing_details: {
                name: user ? user.displayName : 'Guest',
             },
@@ -69,7 +74,7 @@ const PaymentForm = () => {
             <CardElement />
             <PaymentButton
                isLoading={isLoading}
-               onClick={handlePayment}
+               onClick={(e) => handlePayment}
                buttonType={BUTTON_TYPES.inverted}
             >
                {' '}
