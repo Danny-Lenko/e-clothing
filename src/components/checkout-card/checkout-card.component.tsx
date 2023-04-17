@@ -4,9 +4,14 @@ import {
    increaseOrder,
    decreaseOrder,
 } from '../../lib/store/cart/cart.slice'
+import { ICartItem } from '../../lib/store/cart/cart.slice'
 import { Container, ImgContainer } from './checkout-card.styles'
 
-const CheckoutCard = ({ item }) => {
+interface Props {
+   item: ICartItem
+}
+
+const CheckoutCard: React.FC<Props> = ({ item }) => {
    const dispatch = useDispatch()
    const { id, name, imageUrl, price, ordered } = item
 
