@@ -1,9 +1,14 @@
 import Button, { BUTTON_TYPES } from '../button/button.component'
 import { addProduct } from '../../lib/store/cart/cart.slice'
 import { useDispatch } from 'react-redux'
+import { CategoryItem } from '../../lib/store/categories/categories.types'
 import { Container, Footer, Name, Price } from './product-card.styles'
 
-const ProductCard = ({ product }) => {
+interface Props {
+   product: CategoryItem
+}
+
+const ProductCard: React.FC<Props> = ({ product }) => {
    const { name, imageUrl, price } = product
    const dispatch = useDispatch()
 
