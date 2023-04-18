@@ -6,11 +6,11 @@ import { setIsOpen } from '../../lib/store/cart/cart.slice'
 import { useDispatch } from 'react-redux'
 import { selectCartItems } from '../../lib/store/cart/cart.selector'
 import { Container, CartItems, EmptyMessage } from './cart-dropdown.styles'
+import { CartContext } from '../../lib/contexts/cart.context'
+import { useContext } from 'react'
 
 const CartDropdown = () => {
-   const dispatch = useDispatch()
-   const cartItems = useSelector(selectCartItems)
-   const navigate = useNavigate()
+const {cartItems} = useContext(CartContext)
 
    const handleClick = () => {
       navigate('/checkout')
