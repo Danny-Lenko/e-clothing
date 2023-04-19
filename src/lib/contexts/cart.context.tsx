@@ -9,8 +9,6 @@ export interface ICartItem {
    quantity?: number
 }
 
-
-
 const addCartItem = (cartItems: ICartItem[], productToAdd: ICategory) => {
    const existingCartItem = cartItems.find(
       (cartItem) => cartItem.id === productToAdd.id

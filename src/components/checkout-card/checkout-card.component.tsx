@@ -1,10 +1,11 @@
-import { useDispatch } from 'react-redux'
-import {
-   removeProduct,
-   increaseOrder,
-   decreaseOrder,
-} from '../../lib/store/cart/cart.slice'
-import { ICartItem } from '../../lib/contexts/cart.context'
+// import { useDispatch } from 'react-redux'
+// import {
+//    removeProduct,
+//    increaseOrder,
+//    decreaseOrder,
+// } from '../../lib/store/cart/cart.slice'
+import { useContext } from 'react'
+import { CartContext, ICartItem } from '../../lib/contexts/cart.context'
 import { Container, ImgContainer } from './checkout-card.styles'
 
 interface Props {
@@ -12,19 +13,23 @@ interface Props {
 }
 
 const CheckoutCard: React.FC<Props> = ({ item }) => {
-   const dispatch = useDispatch()
+   // const dispatch = useDispatch()
+   const { removeItemFromCart, addItemToCart, clearItemFromCart } =
+      useContext(CartContext)
    const { id, name, imageUrl, price, quantity } = item
 
-   const handleRemove = () => {
-      dispatch(removeProduct(id))
-   }
-
    const handleIncrease = () => {
-      dispatch(increaseOrder(id))
+      // dispatch(increaseOrder(id))
+      removeItemFromCart(item)
    }
 
    const handleDecrease = () => {
-      dispatch(decreaseOrder(id))
+      // dispatch(decreaseOrder(id))
+      addItemToCart(item)
+   }
+
+   const handleRemove = () => {
+      clearItemFromCart(item)
    }
 
    return (

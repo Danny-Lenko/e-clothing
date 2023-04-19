@@ -1,9 +1,9 @@
 import { MouseEvent } from 'react'
 import { BUTTON_TYPES } from '../button/button.component'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
-import { useSelector } from 'react-redux'
-import { selectCurrentUser } from '../../lib/store/user/user.selector'
-import { selectCartTotal } from '../../lib/store/cart/cart.selector'
+// import { useSelector } from 'react-redux'
+// import { selectCurrentUser } from '../../lib/store/user/user.selector'
+// import { selectCartTotal } from '../../lib/store/cart/cart.selector'
 import { useState } from 'react'
 import {
    PaymentFormContainer,
@@ -14,8 +14,8 @@ import {
 const PaymentForm = () => {
    const stripe = useStripe()
    const elements = useElements()
-   const user = useSelector(selectCurrentUser)
-   const total = useSelector(selectCartTotal)
+   // const user = useSelector(selectCurrentUser)
+   // const total = useSelector(selectCartTotal)
 
    const [isLoading, setIsLoading] = useState(false)
 
