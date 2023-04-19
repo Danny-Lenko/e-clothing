@@ -4,7 +4,7 @@ import {
    increaseOrder,
    decreaseOrder,
 } from '../../lib/store/cart/cart.slice'
-import { ICartItem } from '../../lib/store/cart/cart.slice'
+import { ICartItem } from '../../lib/contexts/cart.context'
 import { Container, ImgContainer } from './checkout-card.styles'
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 const CheckoutCard: React.FC<Props> = ({ item }) => {
    const dispatch = useDispatch()
-   const { id, name, imageUrl, price, ordered } = item
+   const { id, name, imageUrl, price, quantity } = item
 
    const handleRemove = () => {
       dispatch(removeProduct(id))
@@ -39,7 +39,7 @@ const CheckoutCard: React.FC<Props> = ({ item }) => {
             <div className="arrow" onClick={handleDecrease}>
                &#10094;
             </div>
-            <span className="value">{ordered}</span>
+            <span className="value">{quantity}</span>
             <div className="arrow" onClick={handleIncrease}>
                &#10095;
             </div>

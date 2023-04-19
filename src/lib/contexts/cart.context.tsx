@@ -1,15 +1,17 @@
 import { createContext, useState, useEffect } from 'react'
+import { ICategory } from './categories.context'
 
 export interface ICartItem {
    name: string
    price: number
    id: number
    imageUrl: string
-   ordered: number
    quantity?: number
 }
 
-const addCartItem = (cartItems: ICartItem[], productToAdd: ICartItem) => {
+
+
+const addCartItem = (cartItems: ICartItem[], productToAdd: ICategory) => {
    const existingCartItem = cartItems.find(
       (cartItem) => cartItem.id === productToAdd.id
    )
@@ -51,7 +53,7 @@ export interface ICartContext {
    isCartOpen: boolean
    setIsCartOpen: (prevState: boolean) => void
    cartItems: ICartItem[]
-   addItemToCart: (item: ICartItem) => void
+   addItemToCart: (item: ICategory) => void
    removeItemFromCart: (item: ICartItem) => void
    clearItemFromCart: (item: ICartItem) => void
    cartCount: number
@@ -91,7 +93,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       setCartTotal(newCartTotal)
    }, [cartItems])
 
-   const addItemToCart = (productToAdd: ICartItem) => {
+   const addItemToCart = (productToAdd: ICategory) => {
       setCartItems(addCartItem(cartItems, productToAdd))
    }
 

@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import ProductCard from '../product-card/product-card.component'
-import { CategoryItem } from '../../lib/store/categories/categories.types'
+import { ICategory } from '../../lib/contexts/categories.context'
 import { Title, Container } from './category-preview.styles'
 
 interface Props {
    title: string
-   products: CategoryItem[]
+   products: ICategory[]
 }
 
 const CategoryPreview: React.FC<Props> = ({ title, products }) => {

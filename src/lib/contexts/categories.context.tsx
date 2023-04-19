@@ -1,25 +1,25 @@
 import { createContext, useState, useEffect } from 'react'
 import { ApolloError, gql, useQuery } from '@apollo/client'
 
-interface Category {
-   id: string
+export interface ICategory {
+   id: number
    name: string
    price: number
    imageUrl: string
 }
 
-interface Collection {
-   id: string
+export interface ICollection {
+   id: number
    title: string
-   items: Category[]
+   items: ICategory[]
 }
 
-interface CollectionsData {
-   collections: Collection[]
+export interface ICollectionsData {
+   collections: ICollection[]
 }
 
 interface CategoriesContextProps {
-   categoriesMap: Record<string, Category[]>
+   categoriesMap: Record<string, ICategory[]>
    loading: boolean
    error?: ApolloError
 }
@@ -51,14 +51,14 @@ export const CategoriesProvider = ({
    children: React.ReactNode
 }) => {
    const [categoriesMap, setCategoriesMap] = useState<
-      Record<string, Category[]>
+      Record<string, ICategory[]>
    >({})
-   const { loading, error, data } = useQuery<CollectionsData>(COLLECTIONS)
+   const { loading, error, data } = useQuery<ICollectionsData>(COLLECTIONS)
 
    useEffect(() => {
       if (data) {
          const { collections } = data
-         const collectionsMap = collections.reduce<Record<string, Category[]>>(
+         const collectionsMap = collections.reduce<Record<string, ICategory[]>>(
             (acc, collection) => {
                const { title, items } = collection
                acc[title.toLowerCase()] = items

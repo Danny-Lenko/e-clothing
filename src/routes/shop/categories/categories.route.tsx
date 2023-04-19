@@ -3,11 +3,8 @@ import { CategoriesContext } from "../../../lib/contexts/categories.context";
 import CategoryPreview from "../../../components/category-preview/category-preview.component";
 
 const Categories = () => {
-   // const categories = useSelector(selectCategories)
    const {
       categoriesMap,
-      // loading,
-      // error,
    } = useContext(CategoriesContext)
 
    return (
