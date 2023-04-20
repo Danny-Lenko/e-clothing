@@ -1,32 +1,63 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { CategoriesContext } from '../../../lib/contexts/categories.context'
+import { gql, useQuery } from '@apollo/client'
+
 import ProductCard from '../../../components/product-card/product-card.component'
+import Spinner from '../../../components/spinner/spinner.component'
+
 import { Title, Container } from './category.styles'
+import { ICategory } from '../../../lib/contexts/categories.context'
 
 interface UseParamsProps {
    category: string
 }
 
-const Category = () => {
-   const { category } = useParams<keyof UseParamsProps>() as UseParamsProps
+const GET_CATEGORY = gql`
+   query ($title: String) {
+      getCollectionsByTitle(title: $title) {
+         title
+         id
+         items {
+            id
+            name
+            price
+            imageUrl
+         }
+      }
+   }
+`
 
-   const { categoriesMap } = useContext(CategoriesContext)
-   const [products, setProducts] = useState(categoriesMap[category])
+const Category = () => {
+   const { category } = useParams()
+   const { loading, error, data } = useQuery(GET_CATEGORY, {
+      variables: { title: category },
+   })
+   const [products, setProducts] = useState<ICategory[] | null>(null)
 
    useEffect(() => {
-      setProducts(categoriesMap[category])
-   }, [category, categoriesMap])
+      if (data) {
+         const {
+            getCollectionsByTitle: { items },
+         } = data
+         setProducts(items)
+      }
+   }, [category, data])
 
    return (
       <>
-         <Title>{category}</Title>
-         <Container>
-            {products &&
-               products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-               ))}
-         </Container>
+         {loading ? (
+            <Spinner />
+         ) : (
+            <>
+               <Title>{category}</Title>
+               <Container>
+                  {products &&
+                     products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                     ))}
+               </Container>
+            </>
+         )}
       </>
    )
 }
