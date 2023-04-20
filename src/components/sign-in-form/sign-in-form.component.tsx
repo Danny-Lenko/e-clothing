@@ -1,13 +1,12 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import {AuthError, AuthErrorCodes} from 'firebase/auth'
+import { AuthError, AuthErrorCodes } from 'firebase/auth'
 import FormInput from '../form-input/form-input.component'
 import Button, { BUTTON_TYPES } from '../button/button.component'
 import { Container, BtnContainer } from './sign-in-form.styles'
-import { useDispatch } from 'react-redux'
 import {
-   emailSignInStart,
-   googleSignInStart,
-} from '../../lib/store/user/user.action'
+   signInUserWithEmailAndPassword,
+   signInWithGooglePopup,
+} from '../../lib/utils/firebase.utils'
 
 const formDefaultValues = {
    email: '',
@@ -15,7 +14,6 @@ const formDefaultValues = {
 }
 
 const SignInForm = () => {
-   const dispatch = useDispatch()
    const [formValues, setFormValues] = useState(formDefaultValues)
    const { email, password } = formValues
 
@@ -27,7 +25,7 @@ const SignInForm = () => {
    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       try {
-         dispatch(emailSignInStart(email, password))
+         signInUserWithEmailAndPassword(email, password)
          clearForm()
       } catch (error) {
          switch ((error as AuthError).code) {
@@ -48,7 +46,7 @@ const SignInForm = () => {
    }
 
    const logGoogleUser = async () => {
-      dispatch(googleSignInStart())
+      signInWithGooglePopup()
    }
 
    return (
