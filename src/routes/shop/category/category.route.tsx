@@ -8,10 +8,6 @@ import Spinner from '../../../components/spinner/spinner.component'
 import { Title, Container } from './category.styles'
 import { ICategory } from '../../../lib/contexts/categories.context'
 
-interface UseParamsProps {
-   category: string
-}
-
 const GET_CATEGORY = gql`
    query ($title: String) {
       getCollectionsByTitle(title: $title) {

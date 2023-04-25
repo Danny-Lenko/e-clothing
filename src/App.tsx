@@ -5,17 +5,17 @@ import Shop from './routes/shop/shop.route'
 import Auth from './routes/auth/auth.route'
 import Navigation from './components/navigation/navigation.component'
 import Checkout from './routes/checkout/checkout.route'
-// import { checkIsUser } from './lib/store/user/user.action'
-// import { useDispatch } from 'react-redux'
+import { checkIsUser } from './lib/store/user/user.action'
+import { useDispatch } from 'react-redux'
 
 import './app.styles.scss'
 
 function App() {
-   // const dispatch = useDispatch()
+   const dispatch = useDispatch()
 
-   // useEffect(() => {
-   //    dispatch(checkIsUser())
-   // }, [])
+   useEffect(() => {
+      dispatch(checkIsUser())
+   }, [])
 
    return (
       <Routes>

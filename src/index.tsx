@@ -8,11 +8,10 @@ import { Elements } from '@stripe/react-stripe-js'
 import { stripePromise } from './lib/utils/stripe.utils'
 import { CartProvider } from './lib/contexts/cart.context'
 import { CategoriesProvider } from './lib/contexts/categories.context'
-import { UserProvider } from './lib/contexts/user.context'
 
-// import { store, persistor } from './lib/store/store'
-// import { Provider } from 'react-redux'
-// import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from './lib/store/store'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import './index.scss'
 
@@ -28,17 +27,15 @@ render(
       <ApolloProvider client={client}>
          <CartProvider>
             <CategoriesProvider>
-               <UserProvider>
-                  {/* <Provider store={store}>
-                  <PersistGate loading={null} persistor={persistor}> */}
-                  <BrowserRouter>
-                     <Elements stripe={stripePromise}>
-                        <App />
-                     </Elements>
-                  </BrowserRouter>
-                  {/* </PersistGate>
-                  </Provider> */}
-               </UserProvider>
+               <Provider store={store}>
+                  <PersistGate loading={null} persistor={persistor}>
+                     <BrowserRouter>
+                        <Elements stripe={stripePromise}>
+                           <App />
+                        </Elements>
+                     </BrowserRouter>
+                  </PersistGate>
+               </Provider>
             </CategoriesProvider>
          </CartProvider>
       </ApolloProvider>

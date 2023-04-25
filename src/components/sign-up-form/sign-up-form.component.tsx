@@ -3,7 +3,9 @@ import { AuthError, AuthErrorCodes } from 'firebase/auth'
 import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component'
 import { Container } from './sign-up-form.styles'
-import { createAuthUserWithEmailAndPassword } from '../../lib/utils/firebase.utils'
+
+import { useDispatch } from 'react-redux'
+import { signUpStart } from '../../lib/store/user/user.action'
 
 const formDefaultValues = {
    displayName: '',
@@ -13,6 +15,7 @@ const formDefaultValues = {
 }
 
 const SignUpForm = () => {
+   const dispatch = useDispatch()
    const [formValues, setFormValues] = useState(formDefaultValues)
    const { displayName, email, password, confirmPassword } = formValues
 
@@ -30,7 +33,7 @@ const SignUpForm = () => {
       }
 
       try {
-         createAuthUserWithEmailAndPassword(email, password)
+         dispatch(signUpStart(email, password, displayName))
          clearForm()
       } catch (error) {
          if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
