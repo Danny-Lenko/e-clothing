@@ -13,11 +13,8 @@ interface Props {
 
 const CheckoutCard: React.FC<Props> = ({ item }) => {
    const dispatch = useDispatch()
-   const { id, name, imageUrl, price, ordered } = item
 
-   const handleRemove = () => {
-      dispatch(removeProduct(id))
-   }
+   const { id, name, imageUrl, price, ordered } = item
 
    const handleIncrease = () => {
       dispatch(increaseOrder(id))
@@ -25,6 +22,10 @@ const CheckoutCard: React.FC<Props> = ({ item }) => {
 
    const handleDecrease = () => {
       dispatch(decreaseOrder(id))
+   }
+
+   const handleRemove = () => {
+      dispatch(removeProduct(id))
    }
 
    return (

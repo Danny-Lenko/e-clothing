@@ -1,8 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import {AuthError, AuthErrorCodes} from 'firebase/auth'
+import { AuthError, AuthErrorCodes } from 'firebase/auth'
 import FormInput from '../form-input/form-input.component'
 import Button, { BUTTON_TYPES } from '../button/button.component'
 import { Container, BtnContainer } from './sign-in-form.styles'
+
 import { useDispatch } from 'react-redux'
 import {
    emailSignInStart,

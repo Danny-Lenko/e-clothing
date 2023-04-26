@@ -1,32 +1,59 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import ProductCard from '../../../components/product-card/product-card.component'
-import { selectCategories } from '../../../lib/store/categories/categories.selector'
-import { Title, Container } from './category.styles'
+import { gql, useQuery } from '@apollo/client'
 
-interface UseParamsProps {
-   category: string
-}
+import ProductCard from '../../../components/product-card/product-card.component'
+import Spinner from '../../../components/spinner/spinner.component'
+
+import { Title, Container } from './category.styles'
+import { ICategory } from '../../../lib/contexts/categories.context'
+
+const GET_CATEGORY = gql`
+   query ($title: String) {
+      getCollectionsByTitle(title: $title) {
+         title
+         id
+         items {
+            id
+            name
+            price
+            imageUrl
+         }
+      }
+   }
+`
 
 const Category = () => {
-   const { category } = useParams<keyof UseParamsProps>() as UseParamsProps
-   const categories = useSelector(selectCategories)
-   const [products, setProducts] = useState(categories[category])
+   const { category } = useParams()
+   const { loading, error, data } = useQuery(GET_CATEGORY, {
+      variables: { title: category },
+   })
+   const [products, setProducts] = useState<ICategory[] | null>(null)
 
    useEffect(() => {
-      setProducts(categories[category])
-   }, [category, categories])
+      if (data) {
+         const {
+            getCollectionsByTitle: { items },
+         } = data
+         setProducts(items)
+      }
+   }, [category, data])
 
    return (
       <>
-         <Title>{category}</Title>
-         <Container>
-            {products &&
-               products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-               ))}
-         </Container>
+         {loading ? (
+            <Spinner />
+         ) : (
+            <>
+               <Title>{category}</Title>
+               <Container>
+                  {products &&
+                     products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                     ))}
+               </Container>
+            </>
+         )}
       </>
    )
 }

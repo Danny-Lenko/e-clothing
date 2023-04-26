@@ -1,15 +1,16 @@
 import Button, { BUTTON_TYPES } from '../button/button.component'
+import { ICategory } from '../../lib/contexts/categories.context'
+import { Container, Footer, Name, Price } from './product-card.styles'
+// redux
 import { addProduct } from '../../lib/store/cart/cart.slice'
 import { useDispatch } from 'react-redux'
-import { CategoryItem } from '../../lib/store/categories/categories.types'
-import { Container, Footer, Name, Price } from './product-card.styles'
 
 interface Props {
-   product: CategoryItem
+   product: ICategory
 }
 
 const ProductCard: React.FC<Props> = ({ product }) => {
-   const { name, imageUrl, price } = product
+   const { id, name, imageUrl, price } = product
    const dispatch = useDispatch()
 
    const handleClick = () => {

@@ -6,7 +6,7 @@ interface Props {
 }
 
 const CartItem: React.FC<Props> = ({ item }) => {
-   const { name, imageUrl, ordered, price } = item
+   const { name, imageUrl, price, ordered } = item
 
    return (
       <Container>

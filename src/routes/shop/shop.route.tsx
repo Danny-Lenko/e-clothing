@@ -1,25 +1,15 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useContext } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Categories from './categories/categories.route'
 import Category from './category/category.route'
-import { fetchCategoriesStart } from '../../lib/store/categories/categories.action'
-import {
-   selectCategoriesLoading,
-   selectCategories,
-} from '../../lib/store/categories/categories.selector'
 import Spinner from '../../components/spinner/spinner.component'
+import { CategoriesContext } from '../../lib/contexts/categories.context'
 
 const Shop = () => {
-   const dispatch = useDispatch()
-   const loading = useSelector(selectCategoriesLoading)
-   const categories = useSelector(selectCategories)
-
-   useEffect(() => {
-      if (!Object.keys(categories).length) {
-         dispatch(fetchCategoriesStart())
-      }
-   }, [])
+   const {
+      loading,
+      error
+   } = useContext(CategoriesContext)
 
    return (
       <>

@@ -1,15 +1,15 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, useState } from 'react'
 import { BUTTON_TYPES } from '../button/button.component'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
-import { useSelector } from 'react-redux'
-import { selectCurrentUser } from '../../lib/store/user/user.selector'
-import { selectCartTotal } from '../../lib/store/cart/cart.selector'
-import { useState } from 'react'
 import {
    PaymentFormContainer,
    FormContainer,
    PaymentButton,
 } from './payment-form.styles'
+
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '../../lib/store/user/user.selector'
+import { selectCartTotal } from '../../lib/store/cart/cart.selector'
 
 const PaymentForm = () => {
    const stripe = useStripe()
@@ -51,7 +51,7 @@ const PaymentForm = () => {
          payment_method: {
             card: cardContent,
             billing_details: {
-               name: user ? user.displayName : 'Guest',
+               name: user ? user.displayName! : 'Guest',
             },
          },
       })

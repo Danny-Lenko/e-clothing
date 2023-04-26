@@ -3,6 +3,7 @@ import { AuthError, AuthErrorCodes } from 'firebase/auth'
 import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component'
 import { Container } from './sign-up-form.styles'
+
 import { useDispatch } from 'react-redux'
 import { signUpStart } from '../../lib/store/user/user.action'
 

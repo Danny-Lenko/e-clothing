@@ -1,17 +1,20 @@
-import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import CartIcon from "../cart-icon/cart-icon.component";
-import CartDropdown from "../cart-dropdown/cart-dropdown.component";
-import { selectCurrentUser } from "../../lib/store/user/user.selector";
+import { Outlet } from 'react-router-dom'
+
+import CartIcon from '../cart-icon/cart-icon.component'
+import CartDropdown from '../cart-dropdown/cart-dropdown.component'
+
+import { useSelector, useDispatch } from 'react-redux'
 import { selectIsOpen } from "../../lib/store/cart/cart.selector";
+import { selectCurrentUser } from '../../lib/store/user/user.selector'
+import { signOutStart } from '../../lib/store/user/user.action'
+
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg'
-import { 
-   NavContainer, 
-   NavLinksContainer, 
-   NavLink, 
-   LogoContainer 
-} from "./navigation.styles";
-import { signOutStart } from "../../lib/store/user/user.action";
+import {
+   NavContainer,
+   NavLinksContainer,
+   NavLink,
+   LogoContainer,
+} from './navigation.styles'
 
 const Navigation = () => {
    const dispatch = useDispatch()
@@ -25,36 +28,27 @@ const Navigation = () => {
    return (
       <>
          <NavContainer>
-            <LogoContainer to='/'>
+            <LogoContainer to="/">
                <CrownLogo />
             </LogoContainer>
+
             <NavLinksContainer>
-               <NavLink to='/shop'>
-                  SHOP
-               </NavLink>
-               {
-                  user ? (
-                     <NavLink as='span'
-                        className="nav-link"
-                        onClick={handleClick}
-                     >
-                        SIGN OUT
-                     </NavLink>
-                  ) : (
-                     <NavLink to='/auth'>
-                        SIGN IN
-                     </NavLink>
-                  )
-               }
+               <NavLink to="/shop">SHOP</NavLink>
+               {user ? (
+                  <NavLink as="span" className="nav-link" onClick={handleClick}>
+                     SIGN OUT
+                  </NavLink>
+               ) : (
+                  <NavLink to="/auth">SIGN IN</NavLink>
+               )}
                <CartIcon />
             </NavLinksContainer>
-            {
-               isOpen && <CartDropdown />
-            }
+
+            {isOpen && <CartDropdown />}
          </NavContainer>
          <Outlet />
       </>
-   );
+   )
 }
 
-export default Navigation;
+export default Navigation
