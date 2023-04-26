@@ -1,8 +1,9 @@
-import { useContext } from 'react'
-import { CartContext } from '../../lib/contexts/cart.context'
 import Button, { BUTTON_TYPES } from '../button/button.component'
 import { ICategory } from '../../lib/contexts/categories.context'
 import { Container, Footer, Name, Price } from './product-card.styles'
+// redux
+import { addProduct } from '../../lib/store/cart/cart.slice'
+import { useDispatch } from 'react-redux'
 
 interface Props {
    product: ICategory
@@ -10,11 +11,10 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({ product }) => {
    const { id, name, imageUrl, price } = product
-   const cartItem = { id, name, imageUrl, price }
-   const { addItemToCart } = useContext(CartContext)
+   const dispatch = useDispatch()
 
    const handleClick = () => {
-      addItemToCart(cartItem)
+      dispatch(addProduct(product))
    }
 
    return (

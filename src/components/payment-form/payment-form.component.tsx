@@ -1,20 +1,21 @@
-import { MouseEvent, useContext } from 'react'
-import { UserContext } from '../../lib/contexts/user.context'
+import { MouseEvent, useState } from 'react'
 import { BUTTON_TYPES } from '../button/button.component'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
-import { useState } from 'react'
 import {
    PaymentFormContainer,
    FormContainer,
    PaymentButton,
 } from './payment-form.styles'
-import { CartContext } from '../../lib/contexts/cart.context'
+
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '../../lib/store/user/user.selector'
+import { selectCartTotal } from '../../lib/store/cart/cart.selector'
 
 const PaymentForm = () => {
    const stripe = useStripe()
    const elements = useElements()
-   const { currentUser } = useContext(UserContext)
-   const {cartTotal} = useContext(CartContext)
+   const user = useSelector(selectCurrentUser)
+   const total = useSelector(selectCartTotal)
 
    const [isLoading, setIsLoading] = useState(false)
 
@@ -34,7 +35,7 @@ const PaymentForm = () => {
             headers: {
                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ amount: cartTotal * 100 }),
+            body: JSON.stringify({ amount: total * 100 }),
          }
       ).then((res) => {
          return res.json()
@@ -50,7 +51,7 @@ const PaymentForm = () => {
          payment_method: {
             card: cardContent,
             billing_details: {
-               name: currentUser ? currentUser.displayName! : 'Guest',
+               name: user ? user.displayName! : 'Guest',
             },
          },
       })

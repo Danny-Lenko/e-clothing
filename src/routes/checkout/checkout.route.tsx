@@ -1,9 +1,7 @@
-import { useContext } from "react";
-
 import CheckoutCard from "../../components/checkout-card/checkout-card.component";
 import PaymentForm from "../../components/payment-form/payment-form.component";
-
-import { CartContext } from "../../lib/contexts/cart.context";
+import { useSelector } from "react-redux";
+import { selectCartItems, selectCartTotal } from "../../lib/store/cart/cart.selector";
 
 import { 
    Container,
@@ -13,7 +11,8 @@ import {
 } from "./checkout.styles";
 
 const Checkout = () => {
-   const {cartItems, cartTotal} = useContext(CartContext)
+   const cartItems = useSelector(selectCartItems)
+   const cartTotal = useSelector(selectCartTotal)
 
    if (!cartItems.length) return <h2>Cart is Empty</h2>
 

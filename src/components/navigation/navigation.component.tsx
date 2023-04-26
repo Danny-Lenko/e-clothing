@@ -1,13 +1,10 @@
-import { useContext } from 'react'
 import { Outlet } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 
 import CartIcon from '../cart-icon/cart-icon.component'
 import CartDropdown from '../cart-dropdown/cart-dropdown.component'
 
-// import { UserContext } from '../../lib/contexts/user.context'
-import { CartContext } from '../../lib/contexts/cart.context'
-// import { signOutUser } from '../../lib/utils/firebase.utils'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectIsOpen } from "../../lib/store/cart/cart.selector";
 import { selectCurrentUser } from '../../lib/store/user/user.selector'
 import { signOutStart } from '../../lib/store/user/user.action'
 
@@ -20,11 +17,9 @@ import {
 } from './navigation.styles'
 
 const Navigation = () => {
-   const { isCartOpen } = useContext(CartContext)
-
    const dispatch = useDispatch()
    const user = useSelector(selectCurrentUser)
-   // const isOpen = useSelector(selectIsOpen)
+   const isOpen = useSelector(selectIsOpen)
 
    const handleClick = () => {
       dispatch(signOutStart())
@@ -49,7 +44,7 @@ const Navigation = () => {
                <CartIcon />
             </NavLinksContainer>
 
-            {isCartOpen && <CartDropdown />}
+            {isOpen && <CartDropdown />}
          </NavContainer>
          <Outlet />
       </>

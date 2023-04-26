@@ -1,5 +1,10 @@
-import { useContext } from 'react'
-import { CartContext, ICartItem } from '../../lib/contexts/cart.context'
+import { useDispatch } from 'react-redux'
+import {
+   removeProduct,
+   increaseOrder,
+   decreaseOrder,
+} from '../../lib/store/cart/cart.slice'
+import { ICartItem } from '../../lib/store/cart/cart.slice'
 import { Container, ImgContainer } from './checkout-card.styles'
 
 interface Props {
@@ -7,20 +12,20 @@ interface Props {
 }
 
 const CheckoutCard: React.FC<Props> = ({ item }) => {
-   const { removeItemFromCart, addItemToCart, clearItemFromCart } =
-      useContext(CartContext)
-   const { id, name, imageUrl, price, quantity } = item
+   const dispatch = useDispatch()
+
+   const { id, name, imageUrl, price, ordered } = item
 
    const handleIncrease = () => {
-      addItemToCart(item)
+      dispatch(increaseOrder(id))
    }
 
    const handleDecrease = () => {
-      removeItemFromCart(item)
+      dispatch(decreaseOrder(id))
    }
 
    const handleRemove = () => {
-      clearItemFromCart(item)
+      dispatch(removeProduct(id))
    }
 
    return (
@@ -35,7 +40,7 @@ const CheckoutCard: React.FC<Props> = ({ item }) => {
             <div className="arrow" onClick={handleDecrease}>
                &#10094;
             </div>
-            <span className="value">{quantity}</span>
+            <span className="value">{ordered}</span>
             <div className="arrow" onClick={handleIncrease}>
                &#10095;
             </div>

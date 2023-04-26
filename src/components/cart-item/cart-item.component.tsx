@@ -1,4 +1,4 @@
-import { ICartItem } from '../../lib/contexts/cart.context'
+import { ICartItem } from '../../lib/store/cart/cart.slice'
 import { Container, ItemDetails, Name } from './cart-item.styles'
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
 }
 
 const CartItem: React.FC<Props> = ({ item }) => {
-   const { name, imageUrl, quantity, price } = item
+   const { name, imageUrl, price, ordered } = item
 
    return (
       <Container>
@@ -14,7 +14,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
          <ItemDetails>
             <Name>{name}</Name>
             <span>
-               {quantity} x {price}
+               {ordered} x {price}
             </span>
          </ItemDetails>
       </Container>
