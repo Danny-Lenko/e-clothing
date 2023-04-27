@@ -1,14 +1,17 @@
-import { useEffect } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Home from './routes/home'
-import Shop from './routes/shop/shop.route'
-import Auth from './routes/auth/auth.route'
-import Navigation from './components/navigation/navigation.component'
-import Checkout from './routes/checkout/checkout.route'
+import Spinner from './components/spinner/spinner.component'
 import { checkIsUser } from './lib/store/user/user.action'
 import { useDispatch } from 'react-redux'
-
 import './app.styles.scss'
+
+const Home = lazy(() => import('./routes/home'))
+const Shop = lazy(() => import('./routes/shop/shop.route'))
+const Auth = lazy(() => import('./routes/auth/auth.route'))
+const Navigation = lazy(
+   () => import('./components/navigation/navigation.component')
+)
+const Checkout = lazy(() => import('./routes/checkout/checkout.route'))
 
 function App() {
    const dispatch = useDispatch()
@@ -18,14 +21,16 @@ function App() {
    }, [])
 
    return (
-      <Routes>
-         <Route path="/" element={<Navigation />}>
-            <Route index element={<Home />} />
-            <Route path="auth" element={<Auth />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="shop/*" element={<Shop />} />
-         </Route>
-      </Routes>
+      <Suspense fallback={<Spinner />}>
+         <Routes>
+            <Route path="/" element={<Navigation />}>
+               <Route index element={<Home />} />
+               <Route path="auth" element={<Auth />} />
+               <Route path="checkout" element={<Checkout />} />
+               <Route path="shop/*" element={<Shop />} />
+            </Route>
+         </Routes>
+      </Suspense>
    )
 }
 
