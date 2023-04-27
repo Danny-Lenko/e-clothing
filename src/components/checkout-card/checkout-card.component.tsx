@@ -1,3 +1,5 @@
+import { FC, memo } from 'react'
+
 import { useDispatch } from 'react-redux'
 import {
    removeProduct,
@@ -11,7 +13,7 @@ interface Props {
    item: ICartItem
 }
 
-const CheckoutCard: React.FC<Props> = ({ item }) => {
+const CheckoutCard: FC<Props> = memo(({ item }) => {
    const dispatch = useDispatch()
 
    const { id, name, imageUrl, price, ordered } = item
@@ -53,6 +55,6 @@ const CheckoutCard: React.FC<Props> = ({ item }) => {
          </span>
       </Container>
    )
-}
+})
 
 export default CheckoutCard

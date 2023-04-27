@@ -1,3 +1,5 @@
+import { FC, memo } from 'react'
+
 import { ICartItem } from '../../lib/store/cart/cart.slice'
 import { Container, ItemDetails, Name } from './cart-item.styles'
 
@@ -5,7 +7,7 @@ interface Props {
    item: ICartItem
 }
 
-const CartItem: React.FC<Props> = ({ item }) => {
+const CartItem: FC<Props> = memo(({ item }) => {
    const { name, imageUrl, price, ordered } = item
 
    return (
@@ -19,6 +21,6 @@ const CartItem: React.FC<Props> = ({ item }) => {
          </ItemDetails>
       </Container>
    )
-}
+})
 
 export default CartItem
