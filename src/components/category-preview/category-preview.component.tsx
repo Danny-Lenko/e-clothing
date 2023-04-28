@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import ProductCard from '../product-card/product-card.component'
 import { ICategory } from '../../lib/contexts/categories.context'
-import { Title, Container } from './category-preview.styles'
+import { Wrapper, Title, Container } from './category-preview.styles'
 
 interface Props {
    title: string
@@ -16,7 +16,7 @@ const CategoryPreview: React.FC<Props> = ({ title, products }) => {
    }
 
    return (
-      <>
+      <Wrapper>
          <h2>
             <Title onClick={handleClick}>{title.toUpperCase()}</Title>
          </h2>
@@ -25,7 +25,7 @@ const CategoryPreview: React.FC<Props> = ({ title, products }) => {
                <ProductCard key={product.id} product={product} />
             ))}
          </Container>
-      </>
+      </Wrapper>
    )
 }
 

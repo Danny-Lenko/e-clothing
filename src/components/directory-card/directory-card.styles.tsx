@@ -36,7 +36,6 @@ export const Container = styled.div`
     }
   }
 `
-
 export const Content = styled.div`
   height: 90px;
   padding: 0 25px;
