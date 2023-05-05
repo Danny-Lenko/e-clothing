@@ -1,3 +1,4 @@
+// local cats
 export const categories = [
    {
       id: 1,
@@ -30,3 +31,4 @@ export const categories = [
       path: 'shop/mens'
    },
 ];
+
