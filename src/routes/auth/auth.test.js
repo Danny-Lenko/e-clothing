@@ -11,7 +11,8 @@ describe('auth', () => {
          </Provider>
       )
       expect(screen.getByText('Sign Up')).toBeInTheDocument()
-      // expect(screen.getByRole('textbox')).toBeInTheDocument();
+      // eslint-disable-next-line jest/valid-expect
+      expect(screen.getAllByRole('button'))
       // expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
       // expect(screen.getByPlaceholderText('search text...')).toBeInTheDocument();
       // expect(screen.getByAltText('search image')).toBeInTheDocument();

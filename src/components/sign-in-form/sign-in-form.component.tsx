@@ -64,6 +64,7 @@ const SignInForm = () => {
                name="email"
                onChange={handleChange}
                value={email}
+               id='email'
             />
 
             <FormInput
@@ -73,6 +74,7 @@ const SignInForm = () => {
                name="password"
                onChange={handleChange}
                value={password}
+               id='password'
             />
 
             <BtnContainer>

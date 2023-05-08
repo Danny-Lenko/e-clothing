@@ -19,6 +19,7 @@ const FormInput: React.FC<Props> = ({ label, ...otherProps }) => {
                      typeof otherProps.value === 'string' &&
                      otherProps.value.length
                )}
+               htmlFor={otherProps.id}
             >
                {label}
             </Label>
