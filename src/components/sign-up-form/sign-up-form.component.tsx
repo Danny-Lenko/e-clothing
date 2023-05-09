@@ -59,6 +59,7 @@ const SignUpForm = () => {
                name="displayName"
                onChange={handleChange}
                value={displayName}
+               id='name'
             />
 
             <FormInput
@@ -68,6 +69,7 @@ const SignUpForm = () => {
                name="email"
                onChange={handleChange}
                value={email}
+               id='email'
             />
 
             <FormInput
@@ -77,6 +79,7 @@ const SignUpForm = () => {
                name="password"
                onChange={handleChange}
                value={password}
+               id='password'
             />
 
             <FormInput
@@ -86,6 +89,7 @@ const SignUpForm = () => {
                name="confirmPassword"
                onChange={handleChange}
                value={confirmPassword}
+               id='confirm'
             />
 
             <Button type="submit">Sign Up</Button>
