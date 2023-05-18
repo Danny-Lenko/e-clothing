@@ -18,8 +18,15 @@ const mockCartItem = {
    ordered: 2,
 }
 
-describe('CheckoutCard component', () => {
+const mockCartItemTwo = {
+   id: 2,
+   name: 'Test Item Two',
+   imageUrl: 'test-image-url-two',
+   price: 11,
+   ordered: 1
+}
 
+describe('CheckoutCard component', () => {
    it('should render the proper props', () => {
       render(<CheckoutCard item={mockCartItem} />)
 
@@ -28,14 +35,22 @@ describe('CheckoutCard component', () => {
       expect(screen.getByText('10')).toBeInTheDocument()
    })
 
-
-
    it('should dispatch an action to increase the item order when the increase arrow is clicked', () => {
       render(<CheckoutCard item={mockCartItem} />)
 
       const increaseArrow = screen.getByTitle(/increase/i)
       userEvent.click(increaseArrow)
       expect(store.dispatch).toHaveBeenCalledWith(increaseOrder(1))
+      expect(store.dispatch).not.toHaveBeenCalledWith(decreaseOrder(1))
+   })
+
+   it('should dispatch increase the item order with the second product', () => {
+      render(<CheckoutCard item={mockCartItemTwo} />)
+
+      const increaseArrow = screen.getByTitle(/increase/i)
+      userEvent.click(increaseArrow)
+      expect(store.dispatch).toHaveBeenCalledWith(increaseOrder(2))
+      expect(store.dispatch).not.toHaveBeenCalledWith(increaseOrder(1))
    })
 
    it('should dispatch an action to decrease the item order when the decrease arrow is clicked', () => {
@@ -44,13 +59,37 @@ describe('CheckoutCard component', () => {
       const decreaseArrow = screen.getByTitle(/decrease/i)
       userEvent.click(decreaseArrow)
       expect(store.dispatch).toHaveBeenCalledWith(decreaseOrder(1))
+      expect(store.dispatch).not.toHaveBeenCalledWith(decreaseOrder(2))
+      expect(store.dispatch).not.toHaveBeenCalledWith(increaseOrder(1))
+      expect(store.dispatch).not.toHaveBeenCalledWith(removeProduct(1))
    })
 
-   it('should dispatch an action to remove the product when the remove button is clicked', async () => {
+   it('should check dispatch decrease the item order the second product', () => {
+      render(<CheckoutCard item={mockCartItemTwo} />)
+
+      const decreaseArrow = screen.getByTitle(/decrease/i)
+      userEvent.click(decreaseArrow)
+      expect(store.dispatch).toHaveBeenCalledWith(decreaseOrder(2))
+      expect(store.dispatch).not.toHaveBeenCalledWith(decreaseOrder(1))
+   })
+
+   it('should dispatch an action to remove the product when the remove button is clicked', () => {
       render(<CheckoutCard item={mockCartItem} />)
 
       const removeButton = screen.getByTitle(/remove/i)
       userEvent.click(removeButton)
       expect(store.dispatch).toHaveBeenCalledWith(removeProduct(1))
+      expect(store.dispatch).not.toHaveBeenCalledWith(removeProduct(2))
+      expect(store.dispatch).not.toHaveBeenCalledWith(increaseOrder(1))
+      expect(store.dispatch).not.toHaveBeenCalledWith(decreaseOrder(1))
+   })
+
+   it('should check dispatch remove with the second product', () => {
+      render(<CheckoutCard item={mockCartItemTwo} />)
+
+      const removeButton = screen.getByTitle(/remove/i)
+      userEvent.click(removeButton)
+      expect(store.dispatch).toHaveBeenCalledWith(removeProduct(2))
+      expect(store.dispatch).not.toHaveBeenCalledWith(removeProduct(1))
    })
 })
