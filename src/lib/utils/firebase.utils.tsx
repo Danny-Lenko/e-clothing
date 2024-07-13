@@ -24,6 +24,7 @@ import {
 import { Category } from '../store/categories/categories.types'
 import { UserData } from '../store/user/user.types'
 
+// -------------------------------------------------------- TODO: THESE CREDS SHOULD BE IN .ENV FILE
 const firebaseConfig = {
    apiKey: 'AIzaSyAZkmmU-KjEGX1XijejLusvzz-UQ37Lh1I',
    authDomain: 'e-clothing-cffad.firebaseapp.com',

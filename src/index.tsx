@@ -15,7 +15,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import './index.scss'
 
 const client = new ApolloClient({
-   uri: 'https://crwn-clothing.com/',
+   // uri: 'https://crwn-clothing.com/',
+   uri: 'https://hilarious-douhua-48c932.netlify.app/',
    cache: new InMemoryCache(),
 })
 
@@ -25,17 +26,17 @@ render(
    <React.StrictMode>
       <ApolloProvider client={client}>
          {/* <CartProvider> */}
-            <CategoriesProvider>
-               <Provider store={store}>
-                  <PersistGate loading={null} persistor={persistor}>
-                     <BrowserRouter>
-                        <Elements stripe={stripePromise}>
-                           <App />
-                        </Elements>
-                     </BrowserRouter>
-                  </PersistGate>
-               </Provider>
-            </CategoriesProvider>
+         <CategoriesProvider>
+            <Provider store={store}>
+               <PersistGate loading={null} persistor={persistor}>
+                  <BrowserRouter>
+                     <Elements stripe={stripePromise}>
+                        <App />
+                     </Elements>
+                  </BrowserRouter>
+               </PersistGate>
+            </Provider>
+         </CategoriesProvider>
          {/* </CartProvider> */}
       </ApolloProvider>
    </React.StrictMode>,

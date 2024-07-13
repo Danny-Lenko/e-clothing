@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import { GlobalStyle } from './global.styles'
 
-const Home = lazy(() => import('./routes/home'))
+const Home = lazy(() => import('./routes/home/home.route'))
 const Shop = lazy(() => import('./routes/shop/shop.route'))
 const Auth = lazy(() => import('./routes/auth/auth.route'))
 const Navigation = lazy(
