@@ -1,24 +1,25 @@
-import styled from "styled-components";
-import { ReactComponent as ShoppingBag } from '../../assets/shopping-bag.svg';
+import styled from 'styled-components'
+import { ReactComponent as ShoppingBag } from '../../assets/shopping-bag.svg'
 
 export const Container = styled.div`
-  width: 45px;
-  height: 45px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+   width: calc(45rem / 16);
+   height: calc(45rem / 16);
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
 `
 
 export const Image = styled(ShoppingBag)`
-  width: 24px;
-  height: 24px;
+   width: calc(20rem / 16);
+   height: calc(20rem / 16);
 `
 
 export const ItemCount = styled.span`
-  position: absolute;
-  font-size: 10px;
-  font-weight: bold;
-  bottom: 12px;
+   position: absolute;
+   font-size: calc(10rem / 16);
+   font-weight: bold;
+   top: 50%;
+   transform: translateY(-30%);
 `

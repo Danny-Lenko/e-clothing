@@ -4,6 +4,7 @@ import Spinner from './components/spinner/spinner.component'
 import { checkIsUser } from './lib/store/user/user.action'
 import { useDispatch } from 'react-redux'
 
+import { Container } from './App.styles'
 import { GlobalStyle } from './global.styles'
 
 const Home = lazy(() => import('./routes/home/home.route'))
@@ -23,15 +24,17 @@ function App() {
 
    return (
       <Suspense fallback={<Spinner />}>
-         <GlobalStyle/>
-         <Routes>
-            <Route path="/" element={<Navigation />}>
-               <Route index element={<Home />} />
-               <Route path="auth" element={<Auth />} />
-               <Route path="checkout" element={<Checkout />} />
-               <Route path="shop/*" element={<Shop />} />
-            </Route>
-         </Routes>
+         <GlobalStyle />
+         <Container>
+            <Routes>
+               <Route path="/" element={<Navigation />}>
+                  <Route index element={<Home />} />
+                  <Route path="auth" element={<Auth />} />
+                  <Route path="checkout" element={<Checkout />} />
+                  <Route path="shop/*" element={<Shop />} />
+               </Route>
+            </Routes>
+         </Container>
       </Suspense>
    )
 }

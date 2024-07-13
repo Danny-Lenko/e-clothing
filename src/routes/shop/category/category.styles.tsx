@@ -1,15 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Title = styled.h2`
-  font-size: 38px;
-  margin-bottom: 25px;
-  text-align: center;
-  text-transform: uppercase;
+   font-size: calc(38rem / 16);
+   margin-bottom: calc(25rem / 16);
+   text-align: center;
+   text-transform: uppercase;
 `
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 10px;
-  row-gap: 50px;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   column-gap: 10px;
+   row-gap: 50px;
 `

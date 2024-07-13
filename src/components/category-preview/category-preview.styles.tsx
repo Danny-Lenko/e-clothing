@@ -13,8 +13,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.span`
-  font-size: 28px;
-  margin-bottom: 25px;
+  font-size: calc(28rem / 16);
+  margin-bottom: calc(25rem / 16);
   cursor: pointer;
 `;
 
