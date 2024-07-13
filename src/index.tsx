@@ -15,8 +15,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import './index.scss'
 
 const client = new ApolloClient({
-   // uri: 'https://crwn-clothing.com/',
-   uri: 'https://hilarious-douhua-48c932.netlify.app/',
+   uri: process.env.REACT_APP_BACKEND_URL,
    cache: new InMemoryCache(),
 })
 
