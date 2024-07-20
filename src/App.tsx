@@ -7,6 +7,9 @@ import { useDispatch } from 'react-redux'
 import { Container } from './App.styles'
 import { GlobalStyle } from './global.styles'
 
+import { auth } from './lib/utils/firebase.utils'
+import { cartService } from './lib/utils/cart.service'
+
 const Home = lazy(() => import('./routes/home/home.route'))
 const Shop = lazy(() => import('./routes/shop/shop.route'))
 const Auth = lazy(() => import('./routes/auth/auth.route'))
@@ -20,6 +23,20 @@ function App() {
 
    useEffect(() => {
       dispatch(checkIsUser())
+   }, [])
+
+   useEffect(() => {
+      const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+         if (auth.currentUser) {
+            cartService.getCart(auth.currentUser.uid).then((cartItems) => {
+               console.log('CART ITEMS:', cartItems)
+            })
+         }
+      })
+
+      return () => {
+         unsubscribeFromAuth()
+      }
    }, [])
 
    return (
