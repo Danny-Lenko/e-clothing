@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { UserData } from './user.types'
+import { UserStateData } from './user.types'
 import {
    signInError,
    signInSuccess,
@@ -7,9 +7,10 @@ import {
    signOutSuccess,
    signUpError,
 } from './user.action'
+import { User } from 'firebase/auth'
 
 export type UserState = {
-   readonly user: UserData | null
+   readonly user: UserStateData | null
    readonly loading: boolean
    readonly error: Error | null
 }

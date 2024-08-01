@@ -9,6 +9,7 @@ import { GlobalStyle } from './global.styles'
 
 import { auth } from './lib/utils/firebase.utils'
 import { cartService } from './lib/utils/cart.service'
+import { setCart } from './lib/store/cart/cart.slice'
 
 const Home = lazy(() => import('./routes/home/home.route'))
 const Shop = lazy(() => import('./routes/shop/shop.route'))
@@ -30,6 +31,7 @@ function App() {
          if (auth.currentUser) {
             cartService.getCart(auth.currentUser.uid).then((cartItems) => {
                console.log('CART ITEMS:', cartItems)
+               dispatch(setCart(cartItems))
             })
          }
       })

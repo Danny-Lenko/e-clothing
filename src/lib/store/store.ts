@@ -5,8 +5,9 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
 
-import { rootReducer } from './root-reducer';
+import { rootReducer } from './root-reducer'
 import { rootSaga } from './root-saga'
+import { firestoreSyncMiddleware } from '../middlewares/firestoreSync'
 
 export type RootState = ReturnType<typeof rootReducer>
 
@@ -21,6 +22,7 @@ const sagaMiddleware = createSagaMiddleware()
 const middleWares = [
    process.env.NODE_ENV !== 'production' && logger,
    sagaMiddleware,
+   firestoreSyncMiddleware,
 ].filter((middleware): middleware is Middleware => Boolean(middleware))
 
 const composeEnhancer =
@@ -29,7 +31,7 @@ const composeEnhancer =
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
    compose
 
-   const persistConfig = {
+const persistConfig = {
    key: 'root',
    storage,
    whitelist: ['cart'],

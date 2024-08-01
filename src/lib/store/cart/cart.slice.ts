@@ -15,6 +15,11 @@ interface IInitialState {
 
 type SetCartItems = (cartItems: ICartItem[], id: number) => ICartItem[]
 
+type SetCart = (
+   cartItems: ICartItem[],
+   newCartItems: ICartItem[]
+) => ICartItem[]
+
 const initialState: IInitialState = {
    isOpen: false,
    cartItems: [],
@@ -39,6 +44,9 @@ const cartSlice = createSlice({
       decreaseOrder(state, action) {
          state.cartItems = decreaseOrderHelper(state.cartItems, action.payload)
       },
+      setCart(state, action) {
+         state.cartItems = setCartHelper(state.cartItems, action.payload)
+      },
    },
 })
 
@@ -48,8 +56,11 @@ export const {
    removeProduct,
    increaseOrder,
    decreaseOrder,
+   setCart,
 } = cartSlice.actions
 export const cartReducer = cartSlice.reducer
+
+// helper functions
 
 const addProductHelper = (cartItems: ICartItem[], product: ICartItem) => {
    const chosenProduct = cartItems.find((item) => item.id === product.id)
@@ -81,4 +92,20 @@ const decreaseOrderHelper: SetCartItems = (cartItems, id) => {
          return { ...item, ordered: item.ordered - 1 }
       })
       .filter((item) => item.ordered > 0)
+}
+
+const setCartHelper: SetCart = (cartItems, newCartItems) => {
+   const itemsMap = new Map<number, ICartItem>()
+
+   // Add existing cart items to the map
+   cartItems.forEach((item) => itemsMap.set(item.id, item))
+
+   // Add new cart items to the map, overwriting existing ones if they have the same id
+   newCartItems.forEach((item) => itemsMap.set(item.id, item))
+
+   console.log('ITEMS MAP:', itemsMap)
+
+   // Convert the map values back to an array
+   return Array.from(itemsMap.values())
+   // return [...cartItems, ...newCartItems]
 }
