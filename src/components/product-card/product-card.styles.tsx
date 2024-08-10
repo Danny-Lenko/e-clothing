@@ -16,7 +16,6 @@ export const Container = styled.div`
    }
 
    button {
-      width: 80%;
       opacity: 0.7;
       position: absolute;
       top: calc(255rem / 16);
@@ -70,10 +69,7 @@ export const Footer = styled.div`
 `
 
 export const Name = styled.span`
-   width: 90%;
    margin-bottom: 15px;
 `
 
-export const Price = styled.span`
-   width: 10%;
-`
+export const Price = styled.span``
