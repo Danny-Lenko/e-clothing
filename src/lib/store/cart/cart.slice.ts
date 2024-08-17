@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../store'
+import { cartService } from '../../utils/cart.service'
 
 export interface ICartItem {
    name: string
@@ -44,9 +46,14 @@ const cartSlice = createSlice({
       decreaseOrder(state, action) {
          state.cartItems = decreaseOrderHelper(state.cartItems, action.payload)
       },
-      setCart(state, action) {
-         state.cartItems = setCartHelper(state.cartItems, action.payload)
+      setCartItems(state, action) {
+         state.cartItems = action.payload
       },
+   },
+   extraReducers: (builder) => {
+      builder.addCase(mergeAndSyncCart.fulfilled, (state, action) => {
+         state.cartItems = action.payload
+      })
    },
 })
 
@@ -56,7 +63,7 @@ export const {
    removeProduct,
    increaseOrder,
    decreaseOrder,
-   setCart,
+   setCartItems,
 } = cartSlice.actions
 export const cartReducer = cartSlice.reducer
 
@@ -94,18 +101,29 @@ const decreaseOrderHelper: SetCartItems = (cartItems, id) => {
       .filter((item) => item.ordered > 0)
 }
 
-const setCartHelper: SetCart = (cartItems, newCartItems) => {
-   const itemsMap = new Map<number, ICartItem>()
+export const mergeAndSyncCart = createAsyncThunk(
+   'cart/mergeAndSync',
+   async (userId: string, { getState, dispatch }) => {
+      const state = getState() as RootState
+      const localCart = state.cart.cartItems
 
-   // Add existing cart items to the map
-   cartItems.forEach((item) => itemsMap.set(item.id, item))
+      // Fetch Firestore cart
+      const firestoreCart = (await cartService.getCart(userId)) as ICartItem[]
 
-   // Add new cart items to the map, overwriting existing ones if they have the same id
-   newCartItems.forEach((item) => itemsMap.set(item.id, item))
+      const itemsMap = new Map<number, ICartItem>()
 
-   console.log('ITEMS MAP:', itemsMap)
+      // Add new cart items to the map, overwriting existing ones if they have the same id
+      firestoreCart.forEach((item) => itemsMap.set(item.id, item))
 
-   // Convert the map values back to an array
-   return Array.from(itemsMap.values())
-   // return [...cartItems, ...newCartItems]
-}
+      // Add existing cart items to the map
+      localCart.forEach((item) => itemsMap.set(item.id, item))
+
+      const mergedCart = Array.from(itemsMap.values())
+
+      dispatch(setCartItems(mergedCart))
+
+      await cartService.saveCart(userId, mergedCart)
+
+      return mergedCart
+   }
+)

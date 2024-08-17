@@ -23,6 +23,7 @@ const middleWares = [
    process.env.NODE_ENV !== 'production' && logger,
    sagaMiddleware,
    firestoreSyncMiddleware,
+   thunk,
 ].filter((middleware): middleware is Middleware => Boolean(middleware))
 
 const composeEnhancer =
