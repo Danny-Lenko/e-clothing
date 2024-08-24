@@ -24,14 +24,13 @@ import {
 import { Category } from '../store/categories/categories.types'
 import { UserData } from '../store/user/user.types'
 
-// -------------------------------------------------------- TODO: THESE CREDS SHOULD BE IN .ENV FILE
 const firebaseConfig = {
-   apiKey: 'AIzaSyAZkmmU-KjEGX1XijejLusvzz-UQ37Lh1I',
-   authDomain: 'e-clothing-cffad.firebaseapp.com',
-   projectId: 'e-clothing-cffad',
-   storageBucket: 'e-clothing-cffad.appspot.com',
-   messagingSenderId: '454669562842',
-   appId: '1:454669562842:web:cb68c266920ba8b85646e3',
+   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 }
 
 const firebaseApp = initializeApp(firebaseConfig)
